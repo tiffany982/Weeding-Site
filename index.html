@@ -206,6 +206,57 @@
         canvas.addEventListener('mousemove', draw);
         window.addEventListener('mouseup', () => { drawing = false; ctx.beginPath(); });
     </script>
+async function saveToGuestbook() {
+    const name = document.getElementById('artistName').value;
+    if (!name) { alert("Please enter your name!"); return; }
+
+    const btn = document.getElementById('saveButton');
+    btn.disabled = true;
+    btn.innerText = "SAVING...";
+
+    const imageData = canvas.toDataURL('image/png');
+    
+    try {
+        // 1. UPLOAD TO UPLOADCARE
+        const formData = new FormData();
+        formData.append('UPLOADCARE_PUB_KEY', '98a39db27d7709b8c888');
+        formData.append('UPLOADCARE_STORE', '1');
+        formData.append('file', imageData);
+
+        const upRes = await fetch('https://upload.uploadcare.com/base/', {
+            method: 'POST',
+            body: formData
+        });
+        
+        if (!upRes.ok) throw new Error('Uploadcare failed');
+        const upData = await upRes.json();
+        const imageUrl = `https://ucarecdn.com/${upData.file}/`;
+
+        // 2. SAVE TO GOOGLE SHEETS
+        const sheetRes = await fetch('https://api.sheetbest.com/sheets/92bdd641-83f5-41b0-931c-75b267b99efd', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ 
+                Name: name, 
+                Attending: "Art Guest", 
+                Dietary: imageUrl 
+            })
+        });
+
+        if (!sheetRes.ok) throw new Error('Sheet.best failed');
+
+        alert("Success! Your art is now on the guestbook.");
+        location.reload(); 
+    } catch (error) {
+        console.error("Technical Error:", error);
+        alert("Error saving art. Please try again in a few minutes!");
+        btn.disabled = false;
+        btn.innerText = "SAVE ART TO GUESTBOOK";
+    }
+}
+
+    
 </body>
 </html>
+
 
