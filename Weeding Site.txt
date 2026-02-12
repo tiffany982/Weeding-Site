@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        body {
+            background-color: #008080;
+            font-family: "Arial", sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .paint-window {
+            background-color: #c0c0c0;
+            border: 3px solid;
+            border-color: #ffffff #808080 #808080 #ffffff;
+            width: 950px;
+            padding: 2px;
+            box-shadow: 15px 15px 0px rgba(0, 0, 0, 0.4);
+            margin-bottom: 40px;
+        }
+
+        .title-bar {
+            background: linear-gradient(90deg, #000080, #1084d0);
+            color: white;
+            padding: 3px 10px;
+            display: flex;
+            justify-content: space-between;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .menu-bar {
+            display: flex;
+            gap: 10px;
+            padding: 5px;
+            font-size: 12px;
+            border-bottom: 1px solid #808080;
+        }
+
+        .main-area {
+            display: flex;
+            background-color: #c0c0c0;
+            padding: 5px;
+            gap: 5px;
+        }
+
+        /* Toolbox */
+        .toolbox {
+            width: 70px;
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            padding: 2px;
+            border: 2px inset #ffffff;
+            height: fit-content;
+        }
+
+        .tool-btn {
+            border: 2px solid;
+            border-color: #ffffff #808080 #808080 #ffffff;
+            background: #c0c0c0;
+            cursor: pointer;
+            padding: 8px;
+            font-size: 18px;
+            text-align: center;
+        }
+
+        .tool-btn.active {
+            border-color: #808080 #ffffff #ffffff #808080;
+            background: #d0d0d0;
+            outline: 1px dotted black;
+        }
+
+        /* Brush Size Selector */
+        .size-picker {
+            border: 2px inset #808080;
+            background: white;
+            margin-top: 5px;
+            padding: 5px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .size-dot {
+            background: black;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        .size-dot.selected {
+            outline: 2px solid #0000ff;
+        }
+
+        /* Canvas UI */
+        #canvas-container {
+            position: relative;
+            background: #808080;
+            padding: 3px;
+            border: 2px inset #808080;
+        }
+
+        canvas {
+            background-color: white;
+            display: block;
+            cursor: crosshair;
+        }
+
+        /* Content Boxes */
+        .content-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .section {
+            background: rgba(255, 255, 255, 0.9);
+            border: 2px solid #000;
+            margin: 15px auto;
+            padding: 15px;
+            width: 75%;
+            pointer-events: auto;
+            box-shadow: 5px 5px 0px #444;
+        }
+
+        h1 {
+            font-family: "Comic Sans MS", cursive;
+            color: #ff00ff;
+            font-size: 50px;
+            margin: 0;
+            text-align: center;
+        }
+
+        .badge {
+            background: #ff0000;
+            color: yellow;
+            padding: 5px 15px;
+            font-weight: bold;
+            border: 3px double yellow;
+            display: inline-block;
+        }
+
+        /* Guestbook Gallery */
+        #guestbook-gallery {
+            width: 950px;
+            background: #c0c0c0;
+            border: 3px solid;
+            border-color: #ffffff #808080 #808080 #ffffff;
+            padding: 15px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .guest-art {
+            border: 2px inset #808080;
+            background: white;
+            width: 220px;
+            height: 150px;
+            object-fit: contain;
+        }
+
+        /* Footer Palette */
+        .bottom-bar {
+            display: flex;
+            align-items: center;
+            padding: 5px;
+            gap: 20px;
+        }
+
+        .palette {
+            display: flex;
+            flex-wrap: wrap;
+            width: 260px;
+            border: 2px inset #ffffff;
+            padding: 2px;
+        }
+
+        .color-swatch {
+            width: 18px;
+            height: 18px;
+            border: 1px solid #000;
+            cursor: pointer;
+        }
+
+        .save-btn {
+            background: #008000;
+            color: white;
+            border: 3px solid #fff;
+            padding: 10px 30px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 2px 2px 0px #000;
+        }
+
+        .save-btn:active {
+            box-shadow: none;
+            transform: translate(2px, 2px);
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="paint-window">
+        <div class="title-bar">
+            <span>Tiffany_Jacob_Vegas_v7_FINAL_FIXES.bmp - Paint</span>
+            <span>[ _ ] [ □ ] [ X ]</span>
+        </div>
+
+        <div class="menu-bar"><span>File</span> <span>Edit</span> <span>View</span> <span>Colors</span> <span>Help</span></div>
+
+        <div class="main-area">
+            <div class="toolbox">
+                <div class="tool-btn active" id="pencil" onclick="setTool('pencil')">✏️</div>
+                <div class="tool-btn" id="brush" onclick="setTool('brush')">🖌️</div>
+                <div class="tool-btn" id="spray" onclick="setTool('spray')">🚿</div>
+                <div class="tool-btn" id="stamp" onclick="setTool('stamp')">🎲</div>
+                <div class="tool-btn" id="eraser" onclick="setTool('eraser')">🧽</div>
+                
+                <div class="size-picker">
+                    <div class="size-dot selected" style="width: 3px; height: 3px;" onclick="setSize(2, this)"></div>
+                    <div class="size-dot" style="width: 8px; height: 8px;" onclick="setSize(10, this)"></div>
+                    <div class="size-dot" style="width: 14px; height: 14px;" onclick="setSize(25, this)"></div>
+                    <div style="font-size: 8px; margin-top: 2px;">SIZE</div>
+                </div>
+
+                <div class="palette" id="palette" style="margin-left: 0; width: 60px; margin-top: 10px;">
+                    </div>
+
+                <button class="tool-btn" style="font-size: 10px; margin-top: 10px;" onclick="clearCanvas()">CLEAR</button>
+            </div>
+
+            <div id="canvas-container">
+                <canvas id="paintCanvas" width="850" height="1300"></canvas>
+
+                <div class="content-overlay">
+                    <div style="text-align: center;">
+                        <h1>Tiffany & Jacob</h1>
+                        <div class="badge">VEGAS BABY! - NOV 28, 2026</div>
+                        <div style="font-size: 60px; margin: 10px;">👩🏽‍❤️‍👱🏻‍♂️</div>
+                    </div>
+
+                    <div class="section">
+                        <h3>💒 The Big Day</h3>
+                        <p><strong>Where:</strong> Valley of Fire State Park </p>
+                        <p><strong>When:</strong> November 28th, 2026</p>
+                        <p><strong>Stay:</strong> We'll be staying at The Flamingo Hotel.</p>
+                    </div>
+
+                    <div class="section">
+                        <h3>📖 Our Story</h3>
+                        <p>They met on Hinge in Utah, despite living in completely different locations. What followed was a comedy of errors involving long distance, constant driving, expiring visas, and terrible timing. For 18 months, they ping-ponged between Utah, Ohio, and Quebec, determined to make it work no matter how complicated things got. Between packed cars, rear-view-mirror waves, school deadlines, clashing dogs, and real life chaos, love kept winning. When Jacob proposed on a rainy April day, it marked the end of some of the chaos and the beginning of everything else. Some love stories are effortless. This one earned it.</p>
+                    </div>
+                    <div class="section" style="text-align: center; background: #ffff00;">
+                        <h2 style="margin: 0;">🎨 GUESTBOOK CHALLENGE:</h2>
+                        <p>Draw us something nice below, then hit <b>"SAVE ART"</b> below!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="bottom-bar">
+            <div style="font-size: 12px; margin-left: 80px; flex-grow: 1;">
+                For help with drawing, use the toolbox on the left.
+            </div>
+            <button class="save-btn" onclick="saveToGuestbook()">SAVE ART TO GUESTBOOK</button>
+        </div>
+    </div>
+
+    <h2 style="color: white; font-family: 'Comic Sans MS';">🖼️ THE GUESTBOOK GALLERY 🖼️</h2>
+    <div id="guestbook-gallery">
+        <p id="empty-msg" style="font-size: 12px; color: #555;">No art yet. Be the first!</p>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('paintCanvas');
+        const ctx = canvas.getContext('2d');
+        let drawing = false;
+        let currentTool = 'pencil';
+        let currentColor = '#000000';
+        let currentSize = 2;
+        const stamps = ['🎲', '🌵', '💍', '🎰', '💖', '🏜️'];
+
+        // Palette Setup
+        const colors = ['#000000', '#808080', '#800000', '#808000', '#008000', '#008080', '#000080', '#800080', '#ffffff', '#c0c0c0', '#ff0000', '#ffff00', '#00ff00', '#00ffff', '#0000ff', '#ff00ff'];
+        const palette = document.getElementById('palette');
+        colors.forEach(c => {
+            const div = document.createElement('div');
+            div.className = 'color-swatch';
+            div.style.backgroundColor = c;
+            div.onclick = () => currentColor = c;
+            palette.appendChild(div);
+        });
+
+        function setSize(s, el) {
+            currentSize = s;
+            document.querySelectorAll('.size-dot').forEach(dot => dot.classList.remove('selected'));
+            el.classList.add('selected');
+        }
+
+        function startDraw(e) {
+            if (currentTool === 'stamp') {
+                const rect = canvas.getBoundingClientRect();
+                ctx.font = '40px serif';
+                ctx.fillText(stamps[Math.floor(Math.random() * stamps.length)], e.clientX - rect.left - 20, e.clientY - rect.top + 15);
+                return;
+            }
+            drawing = true;
+            draw(e);
+        }
+
+        function draw(e) {
+            if (!drawing || currentTool === 'stamp') return;
+            const rect = canvas.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+
+            ctx.lineCap = 'round';
+            ctx.lineWidth = currentSize;
+
+            if (currentTool === 'pencil') {
+                ctx.strokeStyle = currentColor;
+            } else if (currentTool === 'brush') {
+                ctx.lineWidth = currentSize * 4; // Brushes are naturally chunkier
+                ctx.strokeStyle = currentColor;
+            } else if (currentTool === 'eraser') {
+                ctx.lineWidth = currentSize * 6;
+                ctx.strokeStyle = '#ffffff';
+            } else if (currentTool === 'spray') {
+                ctx.fillStyle = currentColor;
+                const spraySize = currentSize * 5;
+                for (let i = 0; i < 20; i++) ctx.fillRect(x + Math.random() * spraySize - (spraySize/2), y + Math.random() * spraySize - (spraySize/2), 1, 1);
+                return;
+            }
+            ctx.lineTo(x, y);
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.moveTo(x, y);
+        }
+
+        function setTool(t) {
+            currentTool = t;
+            document.querySelectorAll('.tool-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById(t).classList.add('active');
+        }
+
+        function saveToGuestbook() {
+            const dataURL = canvas.toDataURL();
+            const img = document.createElement('img');
+            img.src = dataURL;
+            img.className = 'guest-art';
+            document.getElementById('guestbook-gallery').appendChild(img);
+            document.getElementById('empty-msg').style.display = 'none';
+            alert("Art Saved to the Gallery!");
+        }
+
+        function clearCanvas() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+
+        canvas.addEventListener('mousedown', startDraw);
+        canvas.addEventListener('mousemove', draw);
+        window.addEventListener('mouseup', () => {
+            drawing = false;
+            ctx.beginPath();
+        });
+    </script>
+
+</body>
+
+</html>
