@@ -1,34 +1,56 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Tiffany & Jacob's Wedding</title>
     <link rel="icon" href="https://fav.farm/🎰">
     <style>
         body { background-color: #008080; font-family: "Arial", sans-serif; display: flex; flex-direction: column; align-items: center; padding: 20px; }
-        .paint-window { background-color: #c0c0c0; border: 3px solid; border-color: #ffffff #808080 #808080 #ffffff; width: 950px; padding: 2px; box-shadow: 15px 15px 0px rgba(0, 0, 0, 0.4); margin-bottom: 40px; }
+        
+        /* 2. UPDATED FOR RESPONSIVE WIDTH */
+        .paint-window { 
+            background-color: #c0c0c0; 
+            border: 3px solid; 
+            border-color: #ffffff #808080 #808080 #ffffff; 
+            width: 95vw; 
+            max-width: 950px; 
+            padding: 2px; 
+            box-shadow: 15px 15px 0px rgba(0, 0, 0, 0.4); 
+            margin-bottom: 40px; 
+        }
+        
         .title-bar { background: linear-gradient(90deg, #000080, #1084d0); color: white; padding: 3px 10px; display: flex; justify-content: space-between; font-weight: bold; font-size: 14px; }
         .menu-bar { display: flex; gap: 10px; padding: 5px; font-size: 12px; border-bottom: 1px solid #808080; }
         .main-area { display: flex; background-color: #c0c0c0; padding: 5px; gap: 5px; }
+        
+        /* 3. ADDED MOBILE TOOLBOX ADJUSTMENT */
+        @media (max-width: 600px) {
+            .main-area { flex-direction: column; }
+            .toolbox { width: 100% !important; flex-direction: row !important; flex-wrap: wrap; justify-content: center; }
+            .size-picker { flex-direction: row !important; }
+        }
+
         .toolbox { width: 70px; display: flex; flex-direction: column; gap: 2px; padding: 2px; border: 2px inset #ffffff; height: fit-content; }
         .tool-btn { border: 2px solid; border-color: #ffffff #808080 #808080 #ffffff; background: #c0c0c0; cursor: pointer; padding: 8px; font-size: 18px; text-align: center; }
         .tool-btn.active { border-color: #808080 #ffffff #ffffff #808080; background: #d0d0d0; outline: 1px dotted black; }
         .size-picker { border: 2px inset #808080; background: white; margin-top: 5px; padding: 5px; display: flex; flex-direction: column; align-items: center; gap: 5px; }
         .size-dot { background: black; border-radius: 50%; cursor: pointer; }
         .size-dot.selected { outline: 2px solid #0000ff; }
-        #canvas-container { position: relative; background: #808080; padding: 3px; border: 2px inset #808080; }
-        canvas { background-color: white; display: block; cursor: crosshair; }
-        .content-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; padding: 20px; box-sizing: border-box; }
+        
+        #canvas-container { position: relative; background: #808080; padding: 3px; border: 2px inset #808080; width: fit-content; }
+        canvas { background-color: white; display: block; cursor: crosshair; max-width: 100%; height: auto; touch-action: none; }
+        
+        .content-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; padding: 20px; box-sizing: border-box; overflow-y: auto; }
         .section { background: rgba(255, 255, 255, 0.9); border: 2px solid #000; margin: 15px auto; padding: 15px; width: 75%; pointer-events: auto; box-shadow: 5px 5px 0px #444; }
-        h1 { font-family: "Comic Sans MS", cursive; color: #ff00ff; font-size: 50px; margin: 0; text-align: center; }
+        h1 { font-family: "Comic Sans MS", cursive; color: #ff00ff; font-size: clamp(24px, 8vw, 50px); margin: 0; text-align: center; }
         .badge { background: #ff0000; color: yellow; padding: 5px 15px; font-weight: bold; border: 3px double yellow; display: inline-block; }
         
-        /* Gallery Styles */
-        #guestbook-gallery { width: 950px; background: #c0c0c0; border: 3px inset #ffffff; padding: 15px; display: flex; flex-wrap: wrap; gap: 15px; min-height: 100px; justify-content: center; }
+        #guestbook-gallery { width: 95vw; max-width: 950px; background: #c0c0c0; border: 3px inset #ffffff; padding: 15px; display: flex; flex-wrap: wrap; gap: 15px; min-height: 100px; justify-content: center; }
         .art-container { background: #d0d0d0; border: 2px solid; border-color: #ffffff #808080 #808080 #ffffff; padding: 5px; text-align: center; width: 220px; }
         .guest-art { width: 210px; height: 150px; object-fit: contain; background: white; border: 1px solid #808080; }
         .artist-label { font-size: 11px; font-weight: bold; margin-top: 5px; font-family: "Arial"; color: #000080; }
 
-        .bottom-bar { display: flex; align-items: center; padding: 10px; gap: 10px; border-top: 1px solid #808080; }
+        .bottom-bar { display: flex; align-items: center; padding: 10px; gap: 10px; border-top: 1px solid #808080; flex-wrap: wrap; justify-content: center; }
         .palette { display: flex; flex-wrap: wrap; border: 2px inset #ffffff; padding: 2px; width: 60px; margin-top: 10px; }
         .color-swatch { width: 18px; height: 18px; border: 1px solid #000; cursor: pointer; }
         .save-btn { background: #008000; color: white; border: 3px solid #fff; padding: 10px 20px; font-weight: bold; cursor: pointer; box-shadow: 2px 2px 0px #000; }
@@ -75,32 +97,20 @@
                         <p><strong>Where:</strong> Valley of Fire State Park, NV</p>
                         <p><strong>When:</strong> November 28th, 2026</p>
                         <p><strong>Stay:</strong> We'll be staying at The Flamingo Hotel.</p>
-                        <div style="display: flex; gap: 10px; margin-top: 10px; justify-content: center;">
-    
-                        <button onclick="window.open('https://www.caesars.com/flamingo-las-vegas', '_blank')" 
-            
-                            style="background: #c0c0c0; border: 2px solid; border-color: #fff #808080 #808080 #fff; padding: 5px 10px; font-family: 'Arial'; font-size: 11px; cursor: pointer; font-weight: bold;">
-            
-                            🏨 Flamingo Prices
-            
-                        </button>
-            
-                        <button onclick="window.open('https://www.google.com/travel/flights?q=Flights%20to%20LAS%20on%202026-11-26', '_blank')" 
-            
-                            style="background: #c0c0c0; border: 2px solid; border-color: #fff #808080 #808080 #fff; padding: 5px 10px; font-family: 'Arial'; font-size: 11px; cursor: pointer; font-weight: bold;">
-            
-                            ✈️ Check Flights
-            
-                        </button>
-            
+                        <div style="display: flex; gap: 10px; margin-top: 10px; justify-content: center; flex-wrap: wrap;">
+                            <button onclick="window.open('https://www.caesars.com/flamingo-las-vegas', '_blank')" 
+                                style="background: #c0c0c0; border: 2px solid; border-color: #fff #808080 #808080 #fff; padding: 5px 10px; font-family: 'Arial'; font-size: 11px; cursor: pointer; font-weight: bold;">
+                                🏨 Flamingo Prices
+                            </button>
+                            <button onclick="window.open('https://www.google.com/travel/flights?q=Flights%20to%20LAS%20on%202026-11-26', '_blank')" 
+                                style="background: #c0c0c0; border: 2px solid; border-color: #fff #808080 #808080 #fff; padding: 5px 10px; font-family: 'Arial'; font-size: 11px; cursor: pointer; font-weight: bold;">
+                                ✈️ Check Flights
+                            </button>
+                        </div>
                     </div>
-            
-                </div>
                     <div class="section">
                         <h3>📖 Our Story</h3>
-                        <p>They met on Hinge in Utah, despite living in completely different locations. What followed was a comedy of errors involving long distance, constant driving, expiring visas, and terrible timing. For 18 months, they ping-ponged between Utah, Ohio, and Quebec, determined to make it work no matter how complicated things got. Between packed cars, rear-view-mirror waves, school deadlines, clashing dogs, and real life chaos, love kept winning. When Jacob proposed on a rainy April day, it marked the end of some of the chaos and the beginning of everything else. Some love stories are effortless. This one earned it.
-
-</p>
+                        <p>They met on Hinge in Utah, despite living in completely different locations. What followed was a comedy of errors involving long distance, constant driving, expiring visas, and terrible timing. For 18 months, they ping-ponged between Utah, Ohio, and Quebec, determined to make it work no matter how complicated things got. Between packed cars, rear-view-mirror waves, school deadlines, clashing dogs, and real life chaos, love kept winning. When Jacob proposed on a rainy April day, it marked the end of some of the chaos and the beginning of everything else. Some love stories are effortless. This one earned it.</p>
                     </div>
                     <div class="section" style="text-align: center; background: #ffff00;">
                         <h2 style="margin: 0;">🎨 GUESTBOOK CHALLENGE:</h2>
@@ -132,10 +142,8 @@
         let currentSize = 2;
         const stamps = ['🎲', '🌵', '💍', '🎰', '💖', '🏜️'];
 
-        // Initial Load
         window.onload = loadGallery;
 
-        // Color Palette Setup
         const colors = ['#000000', '#808080', '#800000', '#808000', '#008000', '#008080', '#000080', '#800080', '#ffffff', '#c0c0c0', '#ff0000', '#ffff00', '#00ff00', '#00ffff', '#0000ff', '#ff00ff'];
         const palette = document.getElementById('palette');
         colors.forEach(c => {
@@ -159,21 +167,30 @@
         }
 
         function startDraw(e) {
+            const rect = canvas.getBoundingClientRect();
+            const scaleX = canvas.width / rect.width;
+            const scaleY = canvas.height / rect.height;
+            const x = (e.clientX - rect.left) * scaleX;
+            const y = (e.clientY - rect.top) * scaleY;
+
             if (currentTool === 'stamp') {
-                const rect = canvas.getBoundingClientRect();
                 ctx.font = '40px serif';
-                ctx.fillText(stamps[Math.floor(Math.random() * stamps.length)], e.clientX - rect.left - 20, e.clientY - rect.top + 15);
+                ctx.fillText(stamps[Math.floor(Math.random() * stamps.length)], x - 20, y + 15);
                 return;
             }
             drawing = true;
-            draw(e);
+            ctx.beginPath();
+            ctx.moveTo(x, y);
         }
 
         function draw(e) {
             if (!drawing || currentTool === 'stamp') return;
             const rect = canvas.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
+            const scaleX = canvas.width / rect.width;
+            const scaleY = canvas.height / rect.height;
+            const x = (e.clientX - rect.left) * scaleX;
+            const y = (e.clientY - rect.top) * scaleY;
+
             ctx.lineCap = 'round';
             ctx.lineWidth = (currentTool === 'brush') ? currentSize * 4 : (currentTool === 'eraser') ? currentSize * 6 : currentSize;
             ctx.strokeStyle = (currentTool === 'eraser') ? '#ffffff' : currentColor;
@@ -186,8 +203,6 @@
             }
             ctx.lineTo(x, y);
             ctx.stroke();
-            ctx.beginPath();
-            ctx.moveTo(x, y);
         }
 
         async function loadGallery() {
@@ -222,7 +237,7 @@
                 const formData = new FormData();
                 formData.append('UPLOADCARE_PUB_KEY', '98a39db27d7709b8c888');
                 formData.append('UPLOADCARE_STORE', '1');
-                formData.append('file', blob, 'guest-art.png');
+                formData.append('file', blob, 'image.png'); // ADDED FILENAME HERE TO FIX 400 ERROR
 
                 const upRes = await fetch('https://upload.uploadcare.com/base/', { method: 'POST', body: formData });
                 const upData = await upRes.json();
@@ -245,10 +260,24 @@
 
         function clearCanvas() { ctx.clearRect(0, 0, canvas.width, canvas.height); }
         
-        // DRAWING EVENT LISTENERS (Crucial for fixing the draw issue!)
+        // 4. ADDED TOUCH SUPPORT ENGINE
         canvas.addEventListener('mousedown', startDraw);
         canvas.addEventListener('mousemove', draw);
         window.addEventListener('mouseup', () => { drawing = false; ctx.beginPath(); });
+
+        canvas.addEventListener('touchstart', (e) => { 
+            const touch = e.touches[0];
+            startDraw(touch);
+            e.preventDefault();
+        }, {passive: false});
+
+        canvas.addEventListener('touchmove', (e) => {
+            const touch = e.touches[0];
+            draw(touch);
+            e.preventDefault();
+        }, {passive: false});
+
+        window.addEventListener('touchend', () => { drawing = false; ctx.beginPath(); });
     </script>
 </body>
 </html>
