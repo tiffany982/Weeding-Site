@@ -51,6 +51,7 @@
                 <div class="tool-btn" id="spray" onclick="setTool('spray')">🚿</div>
                 <div class="tool-btn" id="stamp" onclick="setTool('stamp')">🎲</div>
                 <div class="tool-btn" id="eraser" onclick="setTool('eraser')">🧽</div>
+                <span onclick="openFlightSearch()" style="cursor:pointer; color: blue; text-decoration: underline;">✈️ Check Flights</span>
                 
                 <div class="size-picker">
                     <div class="size-dot selected" style="width: 3px; height: 3px;" onclick="setSize(2, this)"></div>
@@ -224,6 +225,16 @@
         }
 
         function clearCanvas() { ctx.clearRect(0, 0, canvas.width, canvas.height); }
+
+        function openFlightSearch() {
+            // This creates a Google Flights link specifically for your wedding date and destination
+            const destination = "LAS";
+            const date = "2026-11-27"; // The day before the wedding
+            const flightUrl = `https://www.google.com/travel/flights?q=Flights%20to%20${destination}%20on%20${date}`;
+    
+            // Open in a new tab so they don't lose their drawing!
+            window.open(flightUrl, '_blank');
+        }
         
         // DRAWING EVENT LISTENERS (Crucial for fixing the draw issue!)
         canvas.addEventListener('mousedown', startDraw);
@@ -232,6 +243,7 @@
     </script>
 </body>
 </html>
+
 
 
 
