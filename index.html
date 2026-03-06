@@ -69,40 +69,27 @@
                     <div style="text-align: center;">
                         <h1>Tiffany & Jacob</h1>
                         <div class="badge">VEGAS BABY! - NOV 28, 2026</div>
+                        <div style="font-size: 60px; margin: 10px;">👩🏽‍❤️‍👱🏻‍♂️</div>
                     </div>
-                    
                     <div class="section">
                         <h3>💒 The Big Day</h3>
                         <p><strong>Where:</strong> Valley of Fire State Park, NV</p>
                         <p><strong>When:</strong> November 28th, 2026</p>
+                        <p><strong>Stay:</strong> We'll be staying at The Flamingo Hotel.</p>
                     </div>
-                
-                    <div class="section">
-                        <h3>🏨 Stay Here</h3>
-                        <p><strong>The Flamingo Hotel</strong><br>3555 S Las Vegas Blvd</p>
-                        
-                        <div style="display: flex; gap: 10px; margin-top: 10px; justify-content: center;">
-                            <button onclick="window.open('https://www.caesars.com/flamingo-las-vegas', '_blank')" 
-                                style="background: #c0c0c0; border: 2px solid; border-color: #fff #808080 #808080 #fff; padding: 5px 10px; font-family: 'Arial'; font-size: 11px; cursor: pointer; font-weight: bold;">
-                                🏨 Flamingo Prices
-                            </button>
-                            <button onclick="window.open('https://www.google.com/travel/flights?q=Flights%20to%20LAS%20on%202026-11-26', '_blank')" 
-                                style="background: #c0c0c0; border: 2px solid; border-color: #fff #808080 #808080 #fff; padding: 5px 10px; font-family: 'Arial'; font-size: 11px; cursor: pointer; font-weight: bold;">
-                                ✈️ Check Flights
-                            </button>
-                        </div>
-                    </div>
-                
                     <div class="section">
                         <h3>📖 Our Story</h3>
-                        <p>From Utah to Quebec, love kept winning. Jacob proposed on a rainy April day, and now we're heading to Vegas!</p>
+                        <p>They met on Hinge in Utah, despite living in completely different locations. What followed was a comedy of errors involving long distance, constant driving, expiring visas, and terrible timing. For 18 months, they ping-ponged between Utah, Ohio, and Quebec, determined to make it work no matter how complicated things got. Between packed cars, rear-view-mirror waves, school deadlines, clashing dogs, and real life chaos, love kept winning. When Jacob proposed on a rainy April day, it marked the end of some of the chaos and the beginning of everything else. Some love stories are effortless. This one earned it.
+
+</p>
                     </div>
-                
                     <div class="section" style="text-align: center; background: #ffff00;">
                         <h2 style="margin: 0;">🎨 GUESTBOOK CHALLENGE:</h2>
-                        <p>Draw us something nice below, then hit <b>"SAVE ART"!</b></p>
+                        <p>Draw us something nice below, add your name, then hit <b>"SAVE ART"!</b></p>
                     </div>
                 </div>
+            </div>
+        </div>
 
         <div class="bottom-bar">
             <span style="font-size: 12px; margin-right: 10px;">Artist Name:</span>
@@ -240,11 +227,14 @@
         function clearCanvas() { ctx.clearRect(0, 0, canvas.width, canvas.height); }
 
         function openFlightSearch() {
-        const check = confirm("WINDOWS 95 TRAVEL AGENT:\n\nWould you like to search for flights to Las Vegas (LAS) for November 2026?");
-        if (check) {
-            window.open("https://www.google.com/travel/flights?q=Flights+to+LAS+Nov+2026", '_blank');
+            // This creates a Google Flights link specifically for your wedding date and destination
+            const destination = "LAS";
+            const date = "2026-11-27"; // The day before the wedding
+            const flightUrl = `https://www.google.com/travel/flights?q=Flights%20to%20${destination}%20on%20${date}`;
+    
+            // Open in a new tab so they don't lose their drawing!
+            window.open(flightUrl, '_blank');
         }
-    }
         
         // DRAWING EVENT LISTENERS (Crucial for fixing the draw issue!)
         canvas.addEventListener('mousedown', startDraw);
@@ -253,9 +243,6 @@
     </script>
 </body>
 </html>
-
-
-
 
 
 
