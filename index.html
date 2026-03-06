@@ -227,14 +227,11 @@
         function clearCanvas() { ctx.clearRect(0, 0, canvas.width, canvas.height); }
 
         function openFlightSearch() {
-            // This creates a Google Flights link specifically for your wedding date and destination
-            const destination = "LAS";
-            const date = "2026-11-27"; // The day before the wedding
-            const flightUrl = `https://www.google.com/travel/flights?q=Flights%20to%20${destination}%20on%20${date}`;
-    
-            // Open in a new tab so they don't lose their drawing!
-            window.open(flightUrl, '_blank');
+        const check = confirm("WINDOWS 95 TRAVEL AGENT:\n\nWould you like to search for flights to Las Vegas (LAS) for November 2026?");
+        if (check) {
+            window.open("https://www.google.com/travel/flights?q=Flights+to+LAS+Nov+2026", '_blank');
         }
+    }
         
         // DRAWING EVENT LISTENERS (Crucial for fixing the draw issue!)
         canvas.addEventListener('mousedown', startDraw);
@@ -243,6 +240,7 @@
     </script>
 </body>
 </html>
+
 
 
 
