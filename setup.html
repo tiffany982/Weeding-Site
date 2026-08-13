@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tiffany &amp; Jacob | Set Up</title>
+<link rel="icon" href="https://fav.farm/♥️">
+<link rel="stylesheet" href="fonts/coterie.css">
+<link rel="stylesheet" href="fonts/garamond.css">
+<link rel="stylesheet" href="fonts/script.css">
+<style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+        --red:#D9310B; --wine:#7a1420; --cream:#f4ead3; --ivory:#f7f1e4; --ink:#2a1710;
+        --coterie:'Coterie',Georgia,serif; --garamond:'EB Garamond',Georgia,serif; --script:'Pinyon Script',cursive; --sans:'Lato',Arial,sans-serif;
+    }
+    body { min-height: 100svh; background: #e7ddc6; font-family: var(--garamond); color: var(--ink); }
+    .polaroids { position: fixed; inset: 0; z-index: 0; overflow: hidden; }
+    .polaroid { position: absolute; width: clamp(150px, 24vw, 270px); background: #fff; padding: 10px 10px 32px; border-radius: 2px; box-shadow: 0 16px 34px rgba(0,0,0,0.22); animation: drop 1s cubic-bezier(.18,.7,.25,1) both; }
+    .polaroid img { display: block; width: 100%; aspect-ratio: 1/1; object-fit: cover; background: #d8ceb7; }
+    @keyframes drop { 0% { transform: translateY(-130vh) rotate(var(--r)); opacity: 0; } 55% { opacity: 1; } 100% { transform: translateY(0) rotate(var(--r)); opacity: 1; } }
+    .page-dim { position: fixed; inset: 0; z-index: 1; background: rgba(231,221,198,0.66); }
+    .back { position: fixed; top: 16px; left: 16px; z-index: 6; font-family: var(--sans); font-size: 11px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--red); text-decoration: none; background: rgba(244,234,211,0.9); padding: 8px 14px; border-radius: 20px; border: 1px solid rgba(217,49,11,0.3); }
+    .wrap { position: relative; z-index: 2; min-height: 100svh; display: flex; flex-direction: column; align-items: center; padding: 66px 18px 54px; }
+    .playing-card { position: relative; width: min(93vw, 640px); background: var(--ivory); border: 2px solid rgba(217,49,11,0.25); border-radius: 20px; box-shadow: 0 24px 60px rgba(0,0,0,0.4); padding: 56px 30px 56px; text-align: center; margin: 0 auto 26px; }
+    .card-corner { position: absolute; display: flex; flex-direction: column; align-items: center; line-height: 0.82; color: var(--red); }
+    .card-corner .letter { font-family: var(--script); font-size: 60px; }
+    .card-corner .pip { font-size: 30px; margin-top: 2px; }
+    .card-corner.tl { top: 26px; left: 30px; }
+    .card-corner.br { bottom: 26px; right: 30px; transform: rotate(180deg); }
+    .c-eyebrow { font-family: var(--sans); font-size: 9px; font-weight: 700; letter-spacing: 0.3em; text-transform: uppercase; color: var(--red); margin-bottom: 6px; }
+    .c-title { font-family: var(--coterie); text-transform: uppercase; font-size: clamp(30px, 7vw, 50px); color: var(--wine); line-height: 0.95; margin-bottom: 6px; }
+    .c-script { font-family: var(--script); font-size: clamp(22px, 5.5vw, 34px); color: var(--red); line-height: 0.85; margin-bottom: 26px; }
+    .notes { max-width: 500px; margin: 0 auto; text-align: left; }
+    .note-block { margin-bottom: 24px; }
+    .note-block:last-child { margin-bottom: 0; }
+    .note-block h3 { font-family: var(--coterie); text-transform: uppercase; font-size: clamp(17px, 4vw, 22px); color: var(--red); letter-spacing: 0.03em; margin-bottom: 5px; }
+    .note-block p { font-family: var(--garamond); font-size: clamp(15px, 2.6vw, 18px); line-height: 1.7; color: var(--ink); }
+    .note-block a { color: var(--red); }
+</style>
+</head>
+<body>
+
+<div class="polaroids" id="polaroids"></div>
+<div class="page-dim"></div>
+<a class="back" href="index.html">&#9668; Main Menu</a>
+
+<div class="wrap">
+    <div class="playing-card">
+        <span class="card-corner tl"><span class="letter">T</span><span class="pip">&#9829;</span></span>
+        <span class="card-corner br"><span class="letter">J</span><span class="pip">&#9829;</span></span>
+        <p class="c-eyebrow">Good to Know</p>
+        <h1 class="c-title">Set Up</h1>
+        <p class="c-script">hotel, attire &amp; getting there</p>
+
+        <div class="notes">
+            <div class="note-block">
+                <h3>Where to Stay</h3>
+                <p>We're staying at <strong>The Flamingo</strong> on the strip. We encourage you to book there or at a nearby casino or hotel, especially if you're catching the buses to the ceremony.</p>
+            </div>
+            <div class="note-block">
+                <h3>Getting There</h3>
+                <p>Buses run from The Flamingo out to Valley of Fire and back. Please meet at <strong>The Flamingo by 11:00 AM</strong>. Driving yourself? Arrive at the park by <strong>12:30 PM</strong>. Buses return to the strip at <strong>5:00 PM</strong>.</p>
+            </div>
+            <div class="note-block">
+                <h3>Dress Code</h3>
+                <p><strong>Semi-formal.</strong> Dress to celebrate, with a little desert practicality in mind.</p>
+            </div>
+            <div class="note-block">
+                <h3>After the Event</h3>
+                <p>Once the buses drop off back on the strip, keep the celebration going! We'll be off taking sunset portraits as newlyweds, but we'll catch up with everyone soon after.</p>
+            </div>
+            <div class="note-block">
+                <h3>Questions?</h3>
+                <p>Reach us any time at <a href="mailto:jacobbreedy@gmail.com">jacobbreedy@gmail.com</a> or call/text Jacob at <a href="tel:5133351330">513-335-1330</a>.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const GP = [
+        'images/gallery/20240527_134341.jpg','images/gallery/20240928_183918.jpg','images/gallery/20240928_183919.jpg',
+        'images/gallery/20250110_231935.jpg','images/gallery/IMG_4817.JPG','images/gallery/Snapchat-472617155.jpg'
+    ];
+    const SPOTS = [
+        {x:1,y:5,r:-8},{x:71,y:3,r:7},{x:82,y:38,r:-6},{x:-3,y:42,r:6},{x:-1,y:74,r:-5},
+        {x:76,y:70,r:8},{x:40,y:87,r:-7},{x:88,y:10,r:5},{x:20,y:26,r:9}
+    ];
+    const wall = document.getElementById('polaroids');
+    SPOTS.forEach((s, i) => {
+        const p = document.createElement('div');
+        p.className = 'polaroid';
+        p.style.left = s.x + '%'; p.style.top = s.y + '%';
+        p.style.setProperty('--r', s.r + 'deg');
+        p.style.animationDelay = (i * 0.14) + 's';
+        const im = document.createElement('img'); im.src = GP[i % GP.length];
+        p.appendChild(im); wall.appendChild(p);
+    });
+</script>
+
+</body>
+</html>

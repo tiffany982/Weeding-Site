@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Tiffany &amp; Jacob | Special Features</title>
+<link rel="icon" href="https://fav.farm/♥️">
+<link rel="stylesheet" href="fonts/coterie.css">
+<link rel="stylesheet" href="fonts/garamond.css">
+<link rel="stylesheet" href="fonts/script.css">
+<style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+        --red:#D9310B; --wine:#7a1420; --cream:#f4ead3; --ivory:#f7f1e4; --ink:#2a1710;
+        --coterie:'Coterie',Georgia,serif; --garamond:'EB Garamond',Georgia,serif; --script:'Pinyon Script',cursive; --sans:'Lato',Arial,sans-serif;
+    }
+    body { min-height: 100svh; background: #e7ddc6; font-family: var(--garamond); color: var(--ink); }
+    .polaroids { position: fixed; inset: 0; z-index: 0; overflow: hidden; }
+    .polaroid { position: absolute; width: clamp(150px, 24vw, 270px); background: #fff; padding: 10px 10px 32px; border-radius: 2px; box-shadow: 0 16px 34px rgba(0,0,0,0.22); animation: drop 1s cubic-bezier(.18,.7,.25,1) both; }
+    .polaroid img { display: block; width: 100%; aspect-ratio: 1/1; object-fit: cover; background: #d8ceb7; }
+    @keyframes drop { 0% { transform: translateY(-130vh) rotate(var(--r)); opacity: 0; } 55% { opacity: 1; } 100% { transform: translateY(0) rotate(var(--r)); opacity: 1; } }
+    .page-dim { position: fixed; inset: 0; z-index: 1; background: rgba(231,221,198,0.68); }
+    .back { position: fixed; top: 16px; left: 16px; z-index: 6; font-family: var(--sans); font-size: 11px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--red); text-decoration: none; background: rgba(244,234,211,0.9); padding: 8px 14px; border-radius: 20px; border: 1px solid rgba(217,49,11,0.3); }
+    .wrap { position: relative; z-index: 2; min-height: 100svh; display: flex; flex-direction: column; align-items: center; padding: 66px 18px 54px; }
+    .playing-card { position: relative; width: min(93vw, 640px); background: var(--ivory); border: 2px solid rgba(217,49,11,0.25); border-radius: 20px; box-shadow: 0 24px 60px rgba(0,0,0,0.4); padding: 56px 30px 52px; text-align: center; margin: 0 auto 26px; }
+    .card-corner { position: absolute; display: flex; flex-direction: column; align-items: center; line-height: 0.82; color: var(--red); }
+    .card-corner .letter { font-family: var(--script); font-size: 60px; }
+    .card-corner .pip { font-size: 30px; margin-top: 2px; }
+    .card-corner.tl { top: 26px; left: 30px; }
+    .card-corner.br { bottom: 26px; right: 30px; transform: rotate(180deg); }
+    .c-eyebrow { font-family: var(--sans); font-size: 9px; font-weight: 700; letter-spacing: 0.3em; text-transform: uppercase; color: var(--red); margin-bottom: 6px; }
+    .c-title { font-family: var(--coterie); text-transform: uppercase; font-size: clamp(28px, 6.5vw, 46px); color: var(--wine); line-height: 0.95; margin-bottom: 6px; }
+    .c-script { font-family: var(--script); font-size: clamp(22px, 5.5vw, 34px); color: var(--red); line-height: 0.85; margin-bottom: 26px; }
+    .notes { max-width: 500px; margin: 0 auto; text-align: left; }
+    .note-block { margin-bottom: 24px; } .note-block:last-child { margin-bottom: 0; }
+    .note-block h3 { font-family: var(--coterie); text-transform: uppercase; font-size: clamp(17px, 4vw, 22px); color: var(--red); letter-spacing: 0.03em; margin-bottom: 5px; }
+    .note-block p { font-family: var(--garamond); font-size: clamp(15px, 2.6vw, 18px); line-height: 1.7; color: var(--ink); }
+
+    /* ---- MS Paint guestbook ---- */
+    .gb-intro { font-family: var(--garamond); font-style: italic; color: var(--wine); text-align: center; max-width: 520px; margin: 4px auto 16px; font-size: 15px; }
+    .paint-window { background-color: #c0c0c0; border: 3px solid; border-color: #ffffff #808080 #808080 #ffffff; width: min(95vw, 700px); padding: 2px; box-shadow: 6px 6px 0 rgba(0,0,0,0.3); margin: 0 auto 20px; }
+    .paint-titlebar { background: linear-gradient(90deg, #000080, #1084d0); color: white; padding: 3px 10px; display: flex; justify-content: space-between; font-weight: bold; font-size: 13px; font-family: Arial, sans-serif; }
+    .paint-menubar { display: flex; gap: 10px; padding: 5px; font-size: 12px; border-bottom: 1px solid #808080; font-family: Arial, sans-serif; }
+    .paint-body { display: flex; background-color: #c0c0c0; padding: 5px; gap: 5px; }
+    @media (max-width: 560px) { .paint-body { flex-direction: column; } .toolbox { width: 100% !important; flex-direction: row !important; flex-wrap: wrap; justify-content: center; } .size-picker { flex-direction: row !important; } }
+    .toolbox { width: 70px; display: flex; flex-direction: column; gap: 2px; padding: 2px; border: 2px inset #ffffff; height: fit-content; }
+    .tool-btn { border: 2px solid; border-color: #ffffff #808080 #808080 #ffffff; background: #c0c0c0; cursor: pointer; padding: 8px; font-size: 18px; text-align: center; font-family: Arial, sans-serif; }
+    .tool-btn.active { border-color: #808080 #ffffff #ffffff #808080; background: #d0d0d0; outline: 1px dotted black; }
+    .size-picker { border: 2px inset #808080; background: white; margin-top: 5px; padding: 5px; display: flex; flex-direction: column; align-items: center; gap: 5px; }
+    .size-dot { background: black; border-radius: 50%; cursor: pointer; }
+    .size-dot.selected { outline: 2px solid #0000ff; }
+    #canvas-container { background: #808080; padding: 3px; border: 2px inset #808080; flex: 1; min-width: 0; }
+    canvas { background-color: white; display: block; cursor: crosshair; width: 100%; height: auto; touch-action: none; }
+    .win-palette { display: flex; flex-wrap: wrap; border: 2px inset #ffffff; padding: 2px; width: 60px; margin-top: 10px; }
+    .color-swatch { width: 18px; height: 18px; border: 1px solid #000; cursor: pointer; }
+    .paint-footer { display: flex; align-items: center; padding: 10px; gap: 10px; border-top: 1px solid #808080; flex-wrap: wrap; justify-content: center; font-family: Arial, sans-serif; font-size: 12px; }
+    .win-input { border: 2px inset #ffffff; padding: 8px; background: white; font-family: Arial, sans-serif; width: 180px; }
+    .save-btn { background: #008000; color: white; border: 3px solid #fff; padding: 10px 20px; font-weight: bold; cursor: pointer; box-shadow: 2px 2px 0 #000; font-family: Arial, sans-serif; }
+    .gallery-label { font-family: Arial, sans-serif; font-size: 13px; font-weight: bold; text-align: center; padding: 8px 0 10px; color: var(--wine); }
+    #guestbook-gallery { background: #c0c0c0; border: 3px inset #ffffff; padding: 15px; display: flex; flex-wrap: wrap; gap: 15px; min-height: 80px; justify-content: center; width: min(95vw, 700px); margin: 0 auto; }
+    .art-container { background: #d0d0d0; border: 2px solid; border-color: #ffffff #808080 #808080 #ffffff; padding: 5px; text-align: center; width: 220px; }
+    .guest-art { width: 210px; height: 150px; object-fit: contain; background: white; border: 1px solid #808080; }
+    .artist-label { font-size: 11px; font-weight: bold; margin-top: 5px; font-family: Arial, sans-serif; color: #000080; }
+</style>
+</head>
+<body>
+
+<div class="polaroids" id="polaroids"></div>
+<div class="page-dim"></div>
+<a class="back" href="index.html">&#9668; Main Menu</a>
+
+<div class="wrap">
+    <div class="playing-card">
+        <span class="card-corner tl"><span class="letter">T</span><span class="pip">&#9829;</span></span>
+        <span class="card-corner br"><span class="letter">J</span><span class="pip">&#9829;</span></span>
+        <p class="c-eyebrow">Bonus Features</p>
+        <h1 class="c-title">Special Features</h1>
+        <p class="c-script">the good stuff</p>
+        <div class="notes">
+            <div class="note-block">
+                <h3>The Vegas Trip</h3>
+                <p>We'll be in Vegas from <strong>Tuesday, November 24</strong> right up to the wedding. There are no official events planned before the big day, but we'd love to explore the strip, hit the tables, and grab dinner with anyone who's already in town. Text Jacob and we'll figure out where to meet up.</p>
+            </div>
+            <div class="note-block">
+                <h3>Gifts</h3>
+                <p>Please, <strong>no gifts</strong>. We're already asking you to travel for us, and that's more than enough. Your presence is the present.</p>
+            </div>
+            <div class="note-block">
+                <h3>The Guestbook</h3>
+                <p>Below is a fully working <strong>MS Paint guestbook</strong>, straight off the original takejiff.com. Pick a tool, draw us something ridiculous, sign your name, and it'll show up in the gallery for everyone to see.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- MS Paint guestbook -->
+    <p class="gb-intro">Leave us a masterpiece in the guestbook &#128071;</p>
+    <div class="paint-window">
+        <div class="paint-titlebar">
+            <span>Tiffany_Jacob_Vegas_v21_FINAL_FIXES.bmp - Paint</span>
+            <span>[ _ ] [ &#9633; ] [ X ]</span>
+        </div>
+        <div class="paint-menubar"><span>File</span><span>Edit</span><span>View</span><span>Colors</span><span>Help</span></div>
+        <div class="paint-body">
+            <div class="toolbox">
+                <div class="tool-btn active" id="pencil" onclick="setTool('pencil')">&#9999;&#65039;</div>
+                <div class="tool-btn" id="brush" onclick="setTool('brush')">&#127820;&#65039;</div>
+                <div class="tool-btn" id="spray" onclick="setTool('spray')">&#128703;</div>
+                <div class="tool-btn" id="stamp" onclick="setTool('stamp')">&#127922;</div>
+                <div class="tool-btn" id="eraser" onclick="setTool('eraser')">&#129534;</div>
+                <div class="size-picker">
+                    <div class="size-dot selected" style="width:3px;height:3px;" onclick="setSize(2,this)"></div>
+                    <div class="size-dot" style="width:8px;height:8px;" onclick="setSize(10,this)"></div>
+                    <div class="size-dot" style="width:14px;height:14px;" onclick="setSize(25,this)"></div>
+                    <div style="font-size:8px;margin-top:2px;font-family:Arial,sans-serif;">SIZE</div>
+                </div>
+                <div class="win-palette" id="palette"></div>
+                <button class="tool-btn" style="font-size:10px;margin-top:10px;" onclick="clearCanvas()">CLEAR</button>
+            </div>
+            <div id="canvas-container"><canvas id="paintCanvas" width="800" height="500"></canvas></div>
+        </div>
+        <div class="paint-footer">
+            <span>Artist Name:</span>
+            <input type="text" id="artistName" class="win-input" placeholder="Type your name...">
+            <button class="save-btn" id="saveButton" onclick="saveToGuestbook()">SAVE ART TO GUESTBOOK</button>
+        </div>
+    </div>
+
+    <p class="gallery-label">&#128444;&#65039; The Guestbook Gallery &#128444;&#65039;</p>
+    <div id="guestbook-gallery"><p style="font-family:Arial,sans-serif;font-size:13px;color:#666;padding:16px;">Loading masterpieces...</p></div>
+</div>
+
+<script>
+    const GP = [
+        'images/gallery/20230610_174513.jpg','images/gallery/20231007_192111.jpg','images/gallery/montana_photo.jpeg',
+        'images/gallery/cousins_wedding_photo.jpeg','images/gallery/pre_engagement_photo.jpeg','images/gallery/IMG_4129.jpg'
+    ];
+    const SPOTS = [{x:1,y:5,r:-8},{x:71,y:3,r:7},{x:82,y:38,r:-6},{x:-3,y:42,r:6},{x:-1,y:74,r:-5},{x:76,y:70,r:8},{x:40,y:90,r:-7},{x:88,y:10,r:5},{x:20,y:26,r:9}];
+    const wall = document.getElementById('polaroids');
+    SPOTS.forEach((s, i) => { const p = document.createElement('div'); p.className='polaroid'; p.style.left=s.x+'%'; p.style.top=s.y+'%'; p.style.setProperty('--r', s.r+'deg'); p.style.animationDelay=(i*0.14)+'s'; const im=document.createElement('img'); im.src=GP[i%GP.length]; p.appendChild(im); wall.appendChild(p); });
+
+    // ---- MS Paint guestbook (same backend as the original site) ----
+    const sheetURL = 'https://api.sheetbest.com/sheets/92bdd641-83f5-41b0-931c-75b267b99efd';
+    const canvas = document.getElementById('paintCanvas');
+    const ctx = canvas.getContext('2d');
+    let drawing = false, currentTool = 'pencil', currentColor = '#000000', currentSize = 2;
+    const stamps = ['🎲','🌵','💍','🎰','💖','🏜️'];
+    window.onload = loadGallery;
+    ['#000000','#808080','#800000','#808000','#008000','#008080','#000080','#800080','#ffffff','#c0c0c0','#ff0000','#ffff00','#00ff00','#00ffff','#0000ff','#ff00ff'].forEach(c => { const d=document.createElement('div'); d.className='color-swatch'; d.style.backgroundColor=c; d.onclick=()=>currentColor=c; document.getElementById('palette').appendChild(d); });
+    function setSize(s, el) { currentSize=s; document.querySelectorAll('.size-dot').forEach(d=>d.classList.remove('selected')); el.classList.add('selected'); }
+    function setTool(t) { currentTool=t; document.querySelectorAll('.tool-btn').forEach(b=>b.classList.remove('active')); document.getElementById(t).classList.add('active'); }
+    function getPos(e) { const r=canvas.getBoundingClientRect(); return { x:(e.clientX-r.left)*canvas.width/r.width, y:(e.clientY-r.top)*canvas.height/r.height }; }
+    function startDraw(e) { const {x,y}=getPos(e); if (currentTool==='stamp') { ctx.font='40px serif'; ctx.fillText(stamps[Math.floor(Math.random()*stamps.length)],x-20,y+15); return; } drawing=true; ctx.beginPath(); ctx.moveTo(x,y); }
+    function draw(e) { if (!drawing||currentTool==='stamp') return; const {x,y}=getPos(e); ctx.lineCap='round'; ctx.lineWidth=currentTool==='brush'?currentSize*4:currentTool==='eraser'?currentSize*6:currentSize; ctx.strokeStyle=currentTool==='eraser'?'#ffffff':currentColor; if (currentTool==='spray') { ctx.fillStyle=currentColor; const s=currentSize*5; for (let i=0;i<20;i++) ctx.fillRect(x+Math.random()*s-s/2,y+Math.random()*s-s/2,1,1); return; } ctx.lineTo(x,y); ctx.stroke(); }
+    canvas.addEventListener('mousedown', startDraw); canvas.addEventListener('mousemove', draw); window.addEventListener('mouseup', () => { drawing=false; ctx.beginPath(); });
+    canvas.addEventListener('touchstart', e => { startDraw(e.touches[0]); e.preventDefault(); }, {passive:false});
+    canvas.addEventListener('touchmove', e => { draw(e.touches[0]); e.preventDefault(); }, {passive:false});
+    window.addEventListener('touchend', () => { drawing=false; ctx.beginPath(); });
+    async function loadGallery() {
+        try {
+            const data = await (await fetch(sheetURL)).json();
+            const g = document.getElementById('guestbook-gallery'); g.innerHTML='';
+            data.reverse().forEach(row => { if (row.Drawing && row.Drawing.includes('http')) { const c=document.createElement('div'); c.className='art-container'; c.innerHTML=`<img src="${row.Drawing}" class="guest-art" loading="lazy"><div class="artist-label">By: ${row['Guest Name']}</div>`; g.appendChild(c); } });
+            if (!g.children.length) g.innerHTML='<p style="font-family:Arial,sans-serif;font-size:13px;color:#666;padding:20px;">No art yet. Be the first!</p>';
+        } catch(e) { console.error('Gallery failed', e); }
+    }
+    async function saveToGuestbook() {
+        const name = document.getElementById('artistName').value.trim();
+        if (!name) { alert('Please enter your name!'); return; }
+        const btn = document.getElementById('saveButton'); btn.disabled=true; btn.innerText='SAVING...';
+        const blob = await new Promise(r => canvas.toBlob(r, 'image/png'));
+        try {
+            const fd = new FormData(); fd.append('UPLOADCARE_PUB_KEY','98a39db27d7709b8c888'); fd.append('UPLOADCARE_STORE','1'); fd.append('file', blob, 'guestbook.png');
+            const up = await (await fetch('https://upload.uploadcare.com/base/', {method:'POST',body:fd})).json();
+            await fetch(sheetURL, { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({'Guest Name': name, Drawing: `https://ucarecdn.com/${up.file}/`}) });
+            alert('Your art is now in the guestbook!'); location.reload();
+        } catch(e) { alert('Error saving. Please try again.'); btn.disabled=false; btn.innerText='SAVE ART TO GUESTBOOK'; }
+    }
+    function clearCanvas() { ctx.clearRect(0,0,canvas.width,canvas.height); }
+</script>
+
+</body>
+</html>

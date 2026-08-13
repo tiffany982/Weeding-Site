@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tiffany &amp; Jacob | The Details</title>
+<link rel="icon" href="https://fav.farm/♥️">
+<link rel="stylesheet" href="fonts/coterie.css">
+<link rel="stylesheet" href="fonts/garamond.css">
+<link rel="stylesheet" href="fonts/script.css">
+<style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+        --red:#D9310B; --red-dk:#a6260a; --wine:#7a1420; --cream:#f4ead3; --ivory:#f7f1e4; --ink:#2a1710; --gold:#cf9d3f;
+        --coterie:'Coterie',Georgia,serif; --garamond:'EB Garamond',Georgia,serif; --script:'Pinyon Script',cursive; --sans:'Lato',Arial,sans-serif;
+    }
+    body { min-height: 100svh; background: #e7ddc6; font-family: var(--garamond); color: var(--ink); }
+
+    /* ---- polaroid background ---- */
+    .polaroids { position: fixed; inset: 0; z-index: 0; overflow: hidden; }
+    .polaroid { position: absolute; width: clamp(150px, 24vw, 270px); background: #fff; padding: 10px 10px 32px; border-radius: 2px; box-shadow: 0 16px 34px rgba(0,0,0,0.22); animation: drop 1s cubic-bezier(.18,.7,.25,1) both; }
+    .polaroid img { display: block; width: 100%; aspect-ratio: 1/1; object-fit: cover; background: #d8ceb7; }
+    @keyframes drop { 0% { transform: translateY(-130vh) rotate(var(--r)); opacity: 0; } 55% { opacity: 1; } 100% { transform: translateY(0) rotate(var(--r)); opacity: 1; } }
+    .page-dim { position: fixed; inset: 0; z-index: 1; background: rgba(231,221,198,0.66); }
+
+    .back { position: fixed; top: 16px; left: 16px; z-index: 6; font-family: var(--sans); font-size: 11px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--red); text-decoration: none; background: rgba(244,234,211,0.9); padding: 8px 14px; border-radius: 20px; border: 1px solid rgba(217,49,11,0.3); }
+
+    .wrap { position: relative; z-index: 2; min-height: 100svh; display: flex; flex-direction: column; align-items: center; padding: 66px 18px 54px; }
+
+    /* ---- playing card ---- */
+    .playing-card { position: relative; width: min(93vw, 640px); background: var(--ivory); border: 2px solid rgba(217,49,11,0.25); border-radius: 20px; box-shadow: 0 24px 60px rgba(0,0,0,0.4); padding: 56px 30px 60px; text-align: center; margin: 0 auto 26px; }
+    .card-corner { position: absolute; display: flex; flex-direction: column; align-items: center; line-height: 0.82; color: var(--red); }
+    .card-corner .letter { font-family: var(--script); font-size: 60px; }
+    .card-corner .pip { font-size: 30px; margin-top: 2px; }
+    .card-corner.tl { top: 26px; left: 30px; }
+    .card-corner.br { bottom: 26px; right: 30px; transform: rotate(180deg); }
+    .card-corner.black { color: #000; }
+
+    .c-eyebrow { font-family: var(--sans); font-size: 9px; font-weight: 700; letter-spacing: 0.3em; text-transform: uppercase; color: var(--red); margin-bottom: 6px; }
+    .c-title { font-family: var(--coterie); text-transform: uppercase; font-size: clamp(30px, 7vw, 50px); color: var(--wine); line-height: 0.95; margin-bottom: 6px; }
+    .c-script { font-family: var(--script); font-size: clamp(22px, 5.5vw, 34px); color: var(--red); line-height: 0.85; margin-bottom: 24px; }
+
+    .info-grid { display: grid; grid-template-columns: repeat(2, minmax(140px, 180px)); gap: 12px; margin: 0 auto 30px; max-width: 392px; justify-content: center; }
+    .info-cell { border: 1px solid rgba(217,49,11,0.28); border-radius: 8px; padding: 16px 12px; text-align: center; }
+    .info-label { font-family: var(--sans); font-size: 8px; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: var(--red); margin-bottom: 7px; }
+    .info-value { font-family: var(--coterie); font-size: clamp(15px, 3vw, 20px); line-height: 1.3; color: var(--wine); }
+    .synopsis { font-family: var(--garamond); font-style: italic; font-size: clamp(15px, 2.6vw, 18px); line-height: 1.8; color: var(--wine); max-width: 520px; margin: 0 auto; text-align: left; }
+
+    /* ---- timeline ---- */
+    .timeline { max-width: 460px; margin: 4px auto 0; text-align: left; position: relative; }
+    .timeline::before { content: ''; position: absolute; left: 13px; top: 6px; bottom: 6px; width: 2px; background: rgba(217,49,11,0.3); }
+    .tl-item { position: relative; padding: 0 0 26px 46px; }
+    .tl-item:last-child { padding-bottom: 0; }
+    .tl-item::before { content: '\2665'; position: absolute; left: 13px; top: 3px; transform: translate(-50%, -35%); font-size: 26px; color: var(--red); line-height: 1; }
+    .tl-time { font-family: var(--coterie); font-size: clamp(18px, 3.6vw, 22px); color: var(--wine); line-height: 1.05; }
+    .tl-title { font-family: var(--garamond); font-style: italic; font-size: clamp(14px, 2.5vw, 17px); color: var(--ink); }
+    .tl-note { font-family: var(--sans); font-size: 14px; letter-spacing: 0.02em; color: #7a5a44; margin-top: 3px; }
+</style>
+</head>
+<body>
+
+<div class="polaroids" id="polaroids"></div>
+<div class="page-dim"></div>
+<a class="back" href="index.html">&#9668; Main Menu</a>
+
+<div class="wrap">
+
+    <!-- Ace of Hearts: the details -->
+    <div class="playing-card">
+        <span class="card-corner tl"><span class="letter">T</span><span class="pip">&#9829;</span></span>
+        <span class="card-corner br"><span class="letter">J</span><span class="pip">&#9829;</span></span>
+        <p class="c-eyebrow">Now Showing</p>
+        <h1 class="c-title">The Details</h1>
+        <p class="c-script">based on a true love story</p>
+
+        <div class="info-grid">
+            <div class="info-cell"><p class="info-label">Where</p><p class="info-value">Valley of Fire<br>State Park, NV</p></div>
+            <div class="info-cell"><p class="info-label">When</p><p class="info-value">Saturday<br>Nov 28, 2026<br>1:00 PM</p></div>
+            <div class="info-cell"><p class="info-label">RSVP By</p><p class="info-value">October 1,<br>2026</p></div>
+            <div class="info-cell"><p class="info-label">Hotel</p><p class="info-value">The Flamingo<br>Las Vegas, NV</p></div>
+        </div>
+
+        <p class="synopsis">They met on Hinge in Utah, despite living in completely different locations. What followed was a comedy of errors involving long distance, constant driving, expiring visas, and terrible timing. For 18 months, they ping ponged between Utah, Ohio, and Quebec, determined to make it work no matter how complicated things got. Between packed cars, rear view mirror waves, school deadlines, clashing dogs, and real life chaos, love kept winning. When Jacob proposed on a rainy April day, it marked the end of some of the chaos and the beginning of everything else. Some love stories are effortless. This one earned it.</p>
+    </div>
+
+    <!-- Timeline card -->
+    <div class="playing-card">
+        <span class="card-corner tl black"><span class="letter">T</span><span class="pip">&#9829;</span></span>
+        <span class="card-corner br black"><span class="letter">J</span><span class="pip">&#9829;</span></span>
+        <p class="c-eyebrow">The Itinerary</p>
+        <h2 class="c-title">Showtimes</h2>
+        <p class="c-script">how the big day unfolds</p>
+        <div class="timeline">
+            <div class="tl-item"><p class="tl-time">11:00 AM</p><p class="tl-title">Meet at The Flamingo</p><p class="tl-note">Gather in the lobby to catch the bus.</p></div>
+            <div class="tl-item"><p class="tl-time">11:15 AM</p><p class="tl-title">Buses depart for Valley of Fire</p></div>
+            <div class="tl-item"><p class="tl-time">12:45 PM</p><p class="tl-title">Arrive at Valley of Fire</p><p class="tl-note">Driving yourself? Please arrive by 12:30.</p></div>
+            <div class="tl-item"><p class="tl-time">1:00 PM</p><p class="tl-title">The Ceremony</p><p class="tl-note">The main feature. Please be seated.</p></div>
+            <div class="tl-item"><p class="tl-time">1:30 PM</p><p class="tl-title">Dinner</p></div>
+            <div class="tl-item"><p class="tl-time">3:00 PM</p><p class="tl-title">Desserts</p></div>
+            <div class="tl-item"><p class="tl-time">3:30 PM</p><p class="tl-title">Portraits &amp; guests board the buses</p></div>
+            <div class="tl-item"><p class="tl-time">5:00 PM</p><p class="tl-title">Buses drop off on the strip</p></div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    const GP = [
+        'images/gallery/20230506_114011.jpg','images/gallery/IMG_5092.jpeg','images/gallery/cedar_city.jpeg',
+        'images/gallery/hiking_photo_utah.jpeg','images/gallery/Pre_date_photo.jpeg','images/gallery/wedding_day_photo.jpeg'
+    ];
+    const SPOTS = [
+        {x:1,y:5,r:-8},{x:71,y:3,r:7},{x:82,y:38,r:-6},{x:-3,y:42,r:6},{x:-1,y:74,r:-5},
+        {x:76,y:70,r:8},{x:40,y:87,r:-7},{x:88,y:10,r:5},{x:20,y:26,r:9}
+    ];
+    const wall = document.getElementById('polaroids');
+    SPOTS.forEach((s, i) => {
+        const p = document.createElement('div');
+        p.className = 'polaroid';
+        p.style.left = s.x + '%'; p.style.top = s.y + '%';
+        p.style.setProperty('--r', s.r + 'deg');
+        p.style.animationDelay = (i * 0.14) + 's';
+        const im = document.createElement('img');
+        im.src = GP[i % GP.length];
+        p.appendChild(im);
+        wall.appendChild(p);
+    });
+</script>
+
+</body>
+</html>

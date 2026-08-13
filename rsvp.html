@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tiffany &amp; Jacob | RSVP</title>
+<link rel="icon" href="https://fav.farm/🎟️">
+<link rel="stylesheet" href="fonts/coterie.css">
+<link rel="stylesheet" href="fonts/garamond.css">
+<link rel="stylesheet" href="fonts/script.css">
+<style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+        --red:#D9310B; --red-dk:#a6260a; --cream:#f4ead3; --cream-2:#fbf5e6; --ink:#2a1710; --gold:#cf9d3f;
+        --coterie:'Coterie',Georgia,serif; --garamond:'EB Garamond',Georgia,serif; --script:'Pinyon Script',cursive; --sans:'Lato',Arial,sans-serif;
+    }
+    body { background: #e7ddc6; color: var(--ink); font-family: var(--garamond); padding: 40px 18px 70px; }
+    .polaroids { position: fixed; inset: 0; z-index: 0; overflow: hidden; }
+    .polaroid { position: absolute; width: clamp(150px, 24vw, 270px); background: #fff; padding: 10px 10px 32px; border-radius: 2px; box-shadow: 0 16px 34px rgba(0,0,0,0.22); animation: pdrop 1s cubic-bezier(.18,.7,.25,1) both; }
+    .polaroid img { display: block; width: 100%; aspect-ratio: 1/1; object-fit: cover; background: #d8ceb7; }
+    @keyframes pdrop { 0% { transform: translateY(-130vh) rotate(var(--r)); opacity: 0; } 55% { opacity: 1; } 100% { transform: translateY(0) rotate(var(--r)); opacity: 1; } }
+    .page-dim { position: fixed; inset: 0; z-index: 1; background: rgba(231,221,198,0.72); }
+
+    .sheet { max-width: 640px; margin: 0 auto; background: var(--cream-2); border: 1px solid rgba(217,49,11,0.3); border-radius: 6px; box-shadow: 0 24px 60px rgba(0,0,0,0.18); padding: 40px 34px 44px; position: relative; z-index: 2; }
+    .sheet::before { content:''; position:absolute; inset:9px; border:1px solid rgba(217,49,11,0.22); border-radius:3px; pointer-events:none; }
+
+    .head { text-align: center; margin-bottom: 28px; }
+    .eyebrow { font-family: var(--sans); font-size: 10px; font-weight: 700; letter-spacing: 0.26em; text-transform: uppercase; color: var(--red); margin-bottom: 8px; }
+    .title { font-family: var(--coterie); text-transform: uppercase; font-size: clamp(46px, 12vw, 78px); line-height: 0.9; color: var(--red); }
+    .tagline { font-family: var(--script); font-size: clamp(22px, 6vw, 34px); color: var(--ink); line-height: 0.8; margin-top: 2px; }
+    .deadline { font-family: var(--garamond); font-style: italic; color: #7a5a44; margin-top: 12px; font-size: 15px; }
+
+    label.lbl { display: block; font-family: var(--sans); font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--red); margin-bottom: 7px; }
+    input[type=text], input[type=email], input[type=tel] {
+        width: 100%; font-family: var(--garamond); font-size: 17px; color: var(--ink);
+        background: #fff; border: 1px solid rgba(42,23,16,0.25); border-radius: 3px; padding: 11px 12px;
+    }
+    input:focus { outline: none; border-color: var(--red); box-shadow: 0 0 0 2px rgba(217,49,11,0.15); }
+
+    .btn { background: var(--red); color: #fff; border: none; font-family: var(--sans); font-weight: 700; font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; padding: 14px 22px; border-radius: 3px; cursor: pointer; box-shadow: 0 4px 0 var(--red-dk); }
+    .btn:hover { background: var(--red-dk); }
+    .submit { width: 100%; margin-top: 10px; padding: 16px; font-size: 13px; letter-spacing: 0.2em; }
+
+    .field { margin-bottom: 20px; }
+    .hidden { display: none !important; }
+    .msg { font-family: var(--garamond); font-style: italic; color: #b03a12; margin-top: 12px; min-height: 20px; }
+
+    /* guest cards */
+    .guest-card { background: #fff; border: 1px solid rgba(42,23,16,0.18); border-radius: 5px; padding: 18px 18px 16px; margin-bottom: 16px; }
+    .guest-name { font-family: var(--coterie); font-size: 22px; color: var(--ink); text-transform: uppercase; letter-spacing: 0.03em; margin-bottom: 12px; }
+    .attend { display: flex; gap: 10px; margin-bottom: 12px; }
+    .attend label { flex: 1; display: flex; align-items: center; justify-content: center; gap: 8px; cursor: pointer; border: 1px solid rgba(42,23,16,0.25); border-radius: 3px; padding: 10px; font-size: 15px; }
+    .attend input { accent-color: var(--red); }
+    .attend label:has(input:checked) { border-color: var(--red); background: #fff6ef; color: var(--red); }
+
+    .match { display: flex; align-items: center; gap: 10px; border: 1px solid rgba(42,23,16,0.22); border-radius: 3px; padding: 11px 13px; margin-bottom: 8px; cursor: pointer; font-size: 16px; }
+    .match:has(input:checked) { border-color: var(--red); background: #fff6ef; }
+    .match input { accent-color: var(--red); width: 18px; height: 18px; }
+    .party-pick { width: 100%; text-align: left; cursor: pointer; font-family: var(--garamond); font-size: 16px; color: var(--ink); background: #fff; }
+    .party-pick:hover { border-color: var(--red); background: #fff6ef; }
+
+    .meals { margin-top: 6px; }
+    .meals .prompt { font-family: var(--sans); font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--red); margin-bottom: 8px; }
+    .meal { display: flex; gap: 10px; align-items: flex-start; border: 1px solid rgba(42,23,16,0.2); border-radius: 3px; padding: 10px 12px; margin-bottom: 8px; cursor: pointer; }
+    .meal:has(input:checked) { border-color: var(--red); background: #fff6ef; }
+    .meal input { accent-color: var(--red); width: 18px; height: 18px; margin-top: 2px; }
+    .meal input:disabled { opacity: 0.4; }
+    .meal .m-name { font-family: var(--sans); font-weight: 700; font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink); }
+    .meal .m-desc { font-family: var(--garamond); font-style: italic; font-size: 13px; color: #7a5a44; }
+    .meal .rank-badge { flex-shrink: 0; width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: var(--sans); font-weight: 700; font-size: 12px; color: #fff; background: var(--red); }
+    .meal .rank-badge:empty { display: none; }
+    .prompt-hint { display: block; margin-top: 3px; font-family: var(--garamond); font-style: italic; font-size: 12px; letter-spacing: 0; text-transform: none; font-weight: 400; color: #9a7a5f; }
+
+    .menu-legend { margin-bottom: 12px; }
+    .m-legend { padding: 6px 0; border-bottom: 1px dashed rgba(42,23,16,0.15); }
+    .m-legend:last-child { border-bottom: none; }
+    .m-legend .m-name { display: block; font-family: var(--sans); font-weight: 700; font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink); }
+    .m-legend .m-desc { font-family: var(--garamond); font-style: italic; font-size: 12px; color: #7a5a44; }
+    .pick { display: flex; align-items: center; gap: 12px; margin-bottom: 8px; }
+    .pick .rank { flex-shrink: 0; width: 76px; font-family: var(--sans); font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--red); }
+    .pick select { flex: 1; font-family: var(--garamond); font-size: 16px; color: var(--ink); padding: 9px 10px; background: #fff; border: 1px solid rgba(42,23,16,0.25); border-radius: 3px; }
+    .pick select:focus { outline: none; border-color: var(--red); box-shadow: 0 0 0 2px rgba(217,49,11,0.15); }
+
+    .backlink { display:block; text-align:center; margin-top: 22px; font-family: var(--sans); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--red); text-decoration: none; }
+    .hp { position: absolute; left: -9999px; }
+
+    /* the four extra questions, boxed and centered */
+    .extra-box { max-width: 460px; margin: 0 auto 20px; border: 1px solid rgba(217,49,11,0.22); border-radius: 6px; padding: 22px 20px 4px; background: #fffaf0; }
+
+    .thankyou-big { font-family: var(--garamond); font-style: italic; color: #5a3a24; margin-top: 18px; font-size: 17px; line-height: 1.6; }
+    .thankyou-back { display: inline-block; margin-top: 26px; }
+</style>
+</head>
+<body>
+
+<div class="polaroids" id="polaroids"></div>
+<div class="page-dim"></div>
+
+<div class="sheet">
+    <div class="head">
+        <p class="eyebrow">Kindly Respond by October 1, 2026</p>
+        <h1 class="title">RSVP</h1>
+        <p class="tagline">save us a seat?</p>
+        <p class="deadline">Valley of Fire, Nevada &nbsp;&bull;&nbsp; November 28, 2026</p>
+    </div>
+
+    <!-- STEP 1: find your invitation -->
+    <div id="lookup">
+        <div id="searchStep">
+            <div class="field">
+                <label class="lbl" for="searchName">Find your invitation</label>
+                <input type="text" id="searchName" placeholder="Enter your name (last name works too)" autocomplete="off" onkeydown="if(event.key==='Enter'){event.preventDefault();doSearch();}">
+            </div>
+            <button class="btn submit" type="button" onclick="doSearch()">Find my invitation</button>
+            <p class="msg" id="searchMsg"></p>
+        </div>
+        <div id="matchStep" class="hidden">
+            <label class="lbl">Which one's your party?</label>
+            <div id="matchList"></div>
+            <a class="backlink" href="javascript:void(0)" onclick="resetSearch()">&#9668; Search a different name</a>
+        </div>
+    </div>
+
+    <!-- STEP 2: RSVP for your party -->
+    <form id="rsvpForm" class="hidden" action="https://formspree.io/f/xgawyrkd" method="POST">
+        <input type="text" name="_gotcha" class="hp" tabindex="-1" autocomplete="off">
+        <input type="hidden" name="_subject" value="New Wedding RSVP">
+        <input type="hidden" name="Party" id="partyField">
+
+        <div id="guestCards"></div>
+
+        <div class="extra-box">
+            <div class="field">
+                <label class="lbl" for="diet">Dietary restrictions or allergies (whole party)</label>
+                <input type="text" id="diet" name="Dietary restrictions" placeholder="Anything we should know">
+            </div>
+
+            <div class="field">
+                <label class="lbl" for="arrival">When do you plan to arrive in Vegas?</label>
+                <input type="text" id="arrival" name="Arriving in Vegas" placeholder="If you know (e.g. Nov 25)">
+            </div>
+
+            <div class="field">
+                <label class="lbl" for="cell">Best cell number to reach you in Vegas</label>
+                <input type="tel" id="cell" name="Cell number" placeholder="For day-of coordination">
+            </div>
+
+            <div class="field">
+                <label class="lbl" for="hotel">Where are you staying in Vegas?</label>
+                <input type="text" id="hotel" name="Staying in Vegas" placeholder="e.g. The Flamingo, or 'Casino floor' if not sure yet" list="vegasHotels">
+                <datalist id="vegasHotels">
+                    <option value="The Flamingo">
+                    <option value="Bellagio">
+                    <option value="Caesars Palace">
+                    <option value="The Venetian">
+                    <option value="MGM Grand">
+                    <option value="Aria">
+                    <option value="Paris Las Vegas">
+                    <option value="Planet Hollywood">
+                    <option value="The Mirage">
+                    <option value="Wynn Las Vegas">
+                    <option value="Encore">
+                    <option value="Luxor">
+                    <option value="Excalibur">
+                    <option value="New York-New York">
+                    <option value="The Cosmopolitan">
+                    <option value="Park MGM">
+                    <option value="Casino floor">
+                </datalist>
+            </div>
+
+            <div class="field">
+                <label class="lbl">Getting to Valley of Fire</label>
+                <div class="attend">
+                    <label><input type="radio" name="Transportation" value="Taking the shuttle"> Taking the shuttle</label>
+                    <label><input type="radio" name="Transportation" value="Driving myself"> Driving myself <span style="font-size:12px;opacity:0.7;">(50 min from the Strip, $15 park entrance fee)</span></label>
+                </div>
+            </div>
+        </div>
+
+        <button type="submit" class="btn submit">Send RSVP</button>
+    </form>
+
+    <div id="thankyou" class="hidden" style="text-align:center;">
+        <p class="eyebrow">That's a wrap</p>
+        <h2 class="title" style="font-size:clamp(42px,11vw,70px);">Thank You</h2>
+        <p class="tagline">your seat is saved</p>
+        <p class="thankyou-big">We can't wait to celebrate with you at Valley of Fire.<br>Now go on, the open bar isn't going to drink itself. See you at the premiere.</p>
+        <a class="btn thankyou-back" href="index.html">&#9668; Back to Menu</a>
+    </div>
+
+    <a class="backlink" id="menuBack" href="index.html">&#9668; Back to Main Menu</a>
+</div>
+
+<script>
+    /* =======================================================================
+       GUEST LIST  —  REPLACE the placeholder parties below with the real ones.
+       Any member's name (partial, case-insensitive) finds their whole party.
+       ======================================================================= */
+    // Households / parties (from the invitation address list)
+    const PARTIES = [
+        { members: ["Bryan Maue"] },
+        { members: ["Stephen Cifuentes"] },
+        { members: ["Matt Krabacher"] },
+        { members: ["Austin Porter", "Sunny Porter"] },
+        { members: ["Nick Oslin", "Catherine Oslin"] },
+        { members: ["Alex Hoyle", "Carissa Hoskins"] },
+        { members: ["Bryan Gardiner"] },
+        { members: ["Jacob Hartman"] },
+        { members: ["Jason Schuler"] },
+        { members: ["Joseph Briede"] },
+        { members: ["Gina Wallace", "Rodney Wallace"] },
+        { members: ["Ben Briede"] },
+        { members: ["Tom Geyer", "Theresa Rose"] },
+        { members: ["Mike Geyer", "Susan Geyer"] },
+        { members: ["Jim Briede"] },
+        { members: ["Cindy Clapp", "Brian Clapp"] },
+        { members: ["Kevin Jordan", "Julie Jordan"] },
+        { members: ["Mark Wallace", "Christina Wallace"] },
+        { members: ["Mike Wallace", "Vicky Wallace"] },
+        { members: ["Mark Schurger", "Debb Schurger"] },
+        { members: ["Tony Briede", "Charmaine Briede"] },
+        { members: ["Emily Meiner"] },
+        { members: ["Janie Cassidy"] },
+        { members: ["Dave Briede", "Linda Briede"] },
+        { members: ["Jim Geyer", "Peggy Geyer"] },
+        { members: ["Haley Gresham"] },
+        { members: ["Jessie Abbott"] },
+        { members: ["Maria Jean Pierre", "Francis Bemiy"] },
+        { members: ["Francis Bemiy Jr."] },
+        { members: ["Veronica Bemiy", "Reynold Gozo", "Reyna Gozo"] },
+        { members: ["Shawna Annan", "Meshach Daniel"] },
+        { members: ["Eliana Annan", "Antoine"] },
+        { members: ["Andrea Annan"] },
+        { members: ["Betty Annan"] },
+        { members: ["Hannah Annan", "Abel Annan"] },
+        { members: ["Brittanny Jn Pierre", "Yano Atouga"] },
+        { members: ["Magdalene Jean Pierre"] },
+        { members: ["Angel Jean Pierre"] },
+        { members: ["Angela Biney", "Fred Biney"] },
+        { members: ["Kaylia Biney", "Fred Biney"] },
+        { members: ["Dejia Biney", "Sydney Biney"] },
+        { members: ["Tiffany Bemiy", "Jacob Briede"] }
+    ];
+
+    // easter-egg nicknames: real name (in the list) -> what shows on the RSVP
+    const NICKNAMES = {
+        "Shawna Annan": "Chubby Chubs",
+        "Eliana Annan": "Tiny Tim"
+    };
+    const nick = n => NICKNAMES[n] || n;
+
+    const MEALS = [
+        { name: "Chateaubriand",              desc: "Sliced tenderloin of beef topped with a red wine demi glaze" },
+        { name: "Garlic Lemon Butter Salmon", desc: "Grilled salmon filet served in a garlic lemon butter sauce" }
+    ];
+
+    function doSearch() {
+        const q = document.getElementById('searchName').value.trim().toLowerCase();
+        const msg = document.getElementById('searchMsg');
+        if (q.length < 2) { msg.textContent = "Type at least two letters of your name."; return; }
+        const matches = PARTIES.filter(p => p.members.some(m => m.toLowerCase().includes(q)));
+        if (!matches.length) {
+            msg.textContent = "Hmm, we couldn't find that name. Try your last name, or reach out to us.";
+            return;
+        }
+        msg.textContent = "";
+        if (matches.length === 1) { selectParty(matches[0]); return; }
+        // more than one household matched (e.g. a shared last name) — let them choose
+        const list = document.getElementById('matchList');
+        list.innerHTML = matches.map(p =>
+            `<button type="button" class="match party-pick" data-i="${PARTIES.indexOf(p)}">${p.members.join(" & ")}</button>`
+        ).join('');
+        list.querySelectorAll('.party-pick').forEach(b =>
+            b.addEventListener('click', () => selectParty(PARTIES[+b.dataset.i]))
+        );
+        document.getElementById('searchStep').classList.add('hidden');
+        document.getElementById('matchStep').classList.remove('hidden');
+    }
+
+    function selectParty(party) {
+        document.getElementById('partyField').value = party.members.map(nick).join(", ");
+        buildCards(party.members);
+        document.getElementById('lookup').classList.add('hidden');
+        document.getElementById('rsvpForm').classList.remove('hidden');
+    }
+
+    function resetSearch() {
+        document.getElementById('matchStep').classList.add('hidden');
+        document.getElementById('searchStep').classList.remove('hidden');
+    }
+
+    function buildCards(members) {
+        const wrap = document.getElementById('guestCards');
+        wrap.innerHTML = '';
+        members.forEach((name, gi) => {
+            const who = nick(name);   // easter-egg nickname if there is one
+            const card = document.createElement('div');
+            card.className = 'guest-card';
+            const mealRows = MEALS.map(m =>
+                `<label class="meal"><input type="radio" name="${who} meal" value="${m.name}">` +
+                `<span><span class="m-name">${m.name}</span><br><span class="m-desc">${m.desc}</span></span></label>`
+            ).join('');
+            card.innerHTML =
+                `<p class="guest-name">${who}</p>` +
+                `<div class="attend">` +
+                    `<label><input type="radio" name="${who} attending" value="Joyfully accepts" required onchange="toggleMeals(this, true)"> Joyfully accepts</label>` +
+                    `<label><input type="radio" name="${who} attending" value="Regretfully declines" onchange="toggleMeals(this, false)"> Regretfully declines</label>` +
+                `</div>` +
+                `<div class="meals hidden">` +
+                    `<p class="prompt">Choose your meal</p>` +
+                    mealRows +
+                `</div>`;
+            wrap.appendChild(card);
+        });
+    }
+
+    function toggleMeals(radio, attending) {
+        const meals = radio.closest('.guest-card').querySelector('.meals');
+        meals.classList.toggle('hidden', !attending);
+        if (!attending) meals.querySelectorAll('input').forEach(b => b.checked = false);
+    }
+
+    // ---- polaroid background ----
+    (function () {
+        const GP = [
+            'images/gallery/20230408_111452.jpg','images/gallery/20230722_201701.jpg','images/gallery/20230722_201821.jpg',
+            'images/gallery/20250421_184002.jpg','images/gallery/20250731_083121.jpg','images/gallery/20250902_155040.jpg'
+        ];
+        const SPOTS = [{x:1,y:5,r:-8},{x:71,y:3,r:7},{x:82,y:38,r:-6},{x:-3,y:42,r:6},{x:-1,y:74,r:-5},{x:76,y:70,r:8},{x:40,y:58,r:-7},{x:88,y:10,r:5},{x:20,y:26,r:9}];
+        const wall = document.getElementById('polaroids');
+        SPOTS.forEach((s, i) => {
+            const p = document.createElement('div');
+            p.className = 'polaroid';
+            p.style.left = s.x + '%'; p.style.top = s.y + '%';
+            p.style.setProperty('--r', s.r + 'deg');
+            p.style.animationDelay = (i * 0.14) + 's';
+            const im = document.createElement('img'); im.src = GP[i % GP.length];
+            p.appendChild(im); wall.appendChild(p);
+        });
+    })();
+
+    // ---- submit via AJAX so we show our own thank-you (not Formspree's page) ----
+    document.getElementById('rsvpForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const form = e.target;
+        const btn = form.querySelector('button[type=submit]');
+        btn.disabled = true; btn.textContent = 'Sending…';
+        try {
+            const res = await fetch(form.action, { method: 'POST', body: new FormData(form), headers: { 'Accept': 'application/json' } });
+            if (!res.ok) throw new Error('bad response');
+            document.querySelector('.head').classList.add('hidden');
+            document.getElementById('lookup').classList.add('hidden');
+            form.classList.add('hidden');
+            document.getElementById('menuBack').classList.add('hidden');
+            document.getElementById('thankyou').classList.remove('hidden');
+            window.scrollTo(0, 0);
+        } catch (err) {
+            btn.disabled = false; btn.textContent = 'Send RSVP';
+            alert('Something went wrong sending your RSVP. Please try again, or reach out to us.');
+        }
+    });
+</script>
+
+</body>
+</html>

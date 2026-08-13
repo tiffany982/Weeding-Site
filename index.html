@@ -1,283 +1,237 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Tiffany & Jacob's Wedding</title>
-    <link rel="icon" href="https://fav.farm/🎰">
-    <style>
-        body { background-color: #008080; font-family: "Arial", sans-serif; display: flex; flex-direction: column; align-items: center; padding: 20px; }
-        
-        /* 2. UPDATED FOR RESPONSIVE WIDTH */
-        .paint-window { 
-            background-color: #c0c0c0; 
-            border: 3px solid; 
-            border-color: #ffffff #808080 #808080 #ffffff; 
-            width: 95vw; 
-            max-width: 950px; 
-            padding: 2px; 
-            box-shadow: 15px 15px 0px rgba(0, 0, 0, 0.4); 
-            margin-bottom: 40px; 
-        }
-        
-        .title-bar { background: linear-gradient(90deg, #000080, #1084d0); color: white; padding: 3px 10px; display: flex; justify-content: space-between; font-weight: bold; font-size: 14px; }
-        .menu-bar { display: flex; gap: 10px; padding: 5px; font-size: 12px; border-bottom: 1px solid #808080; }
-        .main-area { display: flex; background-color: #c0c0c0; padding: 5px; gap: 5px; }
-        
-        /* 3. ADDED MOBILE TOOLBOX ADJUSTMENT */
-        @media (max-width: 600px) {
-            .main-area { flex-direction: column; }
-            .toolbox { width: 100% !important; flex-direction: row !important; flex-wrap: wrap; justify-content: center; }
-            .size-picker { flex-direction: row !important; }
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Tiffany &amp; Jacob | Main Menu</title>
+<link rel="icon" href="https://fav.farm/📀">
+<link rel="stylesheet" href="fonts/coterie.css">
+<link rel="stylesheet" href="fonts/garamond.css">
+<link rel="stylesheet" href="fonts/script.css">
+<style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-        .toolbox { width: 70px; display: flex; flex-direction: column; gap: 2px; padding: 2px; border: 2px inset #ffffff; height: fit-content; }
-        .tool-btn { border: 2px solid; border-color: #ffffff #808080 #808080 #ffffff; background: #c0c0c0; cursor: pointer; padding: 8px; font-size: 18px; text-align: center; }
-        .tool-btn.active { border-color: #808080 #ffffff #ffffff #808080; background: #d0d0d0; outline: 1px dotted black; }
-        .size-picker { border: 2px inset #808080; background: white; margin-top: 5px; padding: 5px; display: flex; flex-direction: column; align-items: center; gap: 5px; }
-        .size-dot { background: black; border-radius: 50%; cursor: pointer; }
-        .size-dot.selected { outline: 2px solid #0000ff; }
-        
-        #canvas-container { position: relative; background: #808080; padding: 3px; border: 2px inset #808080; width: fit-content; }
-        canvas { background-color: white; display: block; cursor: crosshair; max-width: 100%; height: auto; touch-action: none; }
-        
-        .content-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; padding: 20px; box-sizing: border-box; overflow-y: auto; }
-        .section { background: rgba(255, 255, 255, 0.9); border: 2px solid #000; margin: 15px auto; padding: 15px; width: 75%; pointer-events: auto; box-shadow: 5px 5px 0px #444; }
-        h1 { font-family: "Comic Sans MS", cursive; color: #ff00ff; font-size: clamp(24px, 8vw, 50px); margin: 0; text-align: center; }
-        .badge { background: #ff0000; color: yellow; padding: 5px 15px; font-weight: bold; border: 3px double yellow; display: inline-block; }
-        
-        #guestbook-gallery { width: 95vw; max-width: 950px; background: #c0c0c0; border: 3px inset #ffffff; padding: 15px; display: flex; flex-wrap: wrap; gap: 15px; min-height: 100px; justify-content: center; }
-        .art-container { background: #d0d0d0; border: 2px solid; border-color: #ffffff #808080 #808080 #ffffff; padding: 5px; text-align: center; width: 220px; }
-        .guest-art { width: 210px; height: 150px; object-fit: contain; background: white; border: 1px solid #808080; }
-        .artist-label { font-size: 11px; font-weight: bold; margin-top: 5px; font-family: "Arial"; color: #000080; }
+    :root {
+        --red:    #D9310B;
+        --red-dk: #a6260a;
+        --cream:  #f4ead3;
+        --cream-2:#fbf5e6;
+        --ink:    #2a1710;
+        --gold:   #e6b74e;
 
-        .bottom-bar { display: flex; align-items: center; padding: 10px; gap: 10px; border-top: 1px solid #808080; flex-wrap: wrap; justify-content: center; }
-        .palette { display: flex; flex-wrap: wrap; border: 2px inset #ffffff; padding: 2px; width: 60px; margin-top: 10px; }
-        .color-swatch { width: 18px; height: 18px; border: 1px solid #000; cursor: pointer; }
-        .save-btn { background: #008000; color: white; border: 3px solid #fff; padding: 10px 20px; font-weight: bold; cursor: pointer; box-shadow: 2px 2px 0px #000; }
-        .win-input { border: 2px inset #ffffff; padding: 8px; background: white; font-family: "Arial"; width: 180px; }
-    </style>
+        --coterie: 'Coterie', Georgia, serif;
+        --garamond:'EB Garamond', Georgia, serif;
+        --script:  'Pinyon Script', cursive;
+        --sans:    'Lato', Arial, sans-serif;
+    }
+
+    html, body { height: 100%; }
+    body { background: #14100c; font-family: var(--garamond); color: var(--ink); overflow: hidden; }
+
+    .tv { position: relative; width: 100vw; height: 100svh; overflow: hidden; background: #14100c; }
+
+    /* ---- crossfade slideshow (landscape photos, full-bleed cover) ---- */
+    .slideshow { position: absolute; inset: 0; z-index: 0; background: #14100c; }
+    .slide { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 30%; opacity: 0; transition: opacity 1.4s ease; }
+    .slide.show { opacity: 1; }
+
+    /* even dim so the menu card stays readable */
+    .wall-dim { position: absolute; inset: 0; z-index: 1; background: rgba(20,12,8,0.34); pointer-events: none; }
+
+    /* subtle grain */
+    .grain {
+        position: absolute; inset: 0; z-index: 4; pointer-events: none; opacity: 0.2; mix-blend-mode: overlay;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+    }
+
+    /* ---- top / bottom chrome ---- */
+    .chrome-top, .chrome-bot {
+        position: absolute; left: 0; right: 0; z-index: 5;
+        display: flex; justify-content: space-between; align-items: center;
+        padding: 18px 24px;
+        font-family: var(--sans); font-weight: 700; letter-spacing: 0.26em; text-transform: uppercase;
+        color: rgba(251,245,230,0.85); text-shadow: 0 1px 6px rgba(0,0,0,0.5);
+    }
+    .chrome-top { top: 0; font-size: 10px; }
+    .chrome-bot { bottom: 0; font-size: 9px; padding-bottom: 20px; }
+    .chrome-top .gold, .chrome-bot .rating { color: #f0c04a; }
+    .chapter-dots { display: flex; gap: 7px; }
+    .chapter-dots span { width: 7px; height: 7px; border-radius: 50%; border: 1px solid #f0c04a; }
+    .chapter-dots span.on { background: #f0c04a; }
+
+    /* ---- title card (right) ---- */
+    .card {
+        position: absolute; top: 50%; right: clamp(20px, 5vw, 64px); transform: translateY(-50%);
+        z-index: 5;
+        width: min(90vw, 500px);
+        background: rgba(244,234,211,0.95);
+        border: 1px solid rgba(217,49,11,0.35);
+        border-radius: 4px;
+        box-shadow: 0 30px 70px rgba(0,0,0,0.55);
+        padding: 40px 36px 34px;
+        text-align: left;
+    }
+    .card::before { content: ''; position: absolute; inset: 9px; border: 1px solid rgba(217,49,11,0.28); border-radius: 2px; pointer-events: none; }
+
+    .eyebrow { font-family: var(--sans); font-size: 10px; font-weight: 700; letter-spacing: 0.3em; text-transform: uppercase; color: var(--red); margin-bottom: 14px; }
+    .title { font-family: var(--coterie); text-transform: uppercase; font-size: clamp(40px, 9vw, 74px); line-height: 0.92; color: var(--red); letter-spacing: 0.01em; }
+    .title .amp { font-family: var(--garamond); font-style: normal; text-transform: none; color: var(--ink); }
+    .tagline { font-family: var(--script); font-size: clamp(19px, 4vw, 27px); color: var(--ink); line-height: 0.9; margin: 6px 0 22px; }
+    .rule { width: 54px; height: 2px; background: var(--red); margin: 0 0 22px; opacity: 0.7; }
+
+    .options { list-style: none; display: flex; flex-direction: column; gap: 3px; }
+    .opt { position: relative; cursor: pointer; font-family: var(--coterie); text-transform: uppercase; font-size: clamp(19px, 3.4vw, 26px); letter-spacing: 0.05em; color: rgba(42,23,16,0.6); padding: 7px 0; transition: color 0.15s; }
+    .opt .hint { display: block; font-family: var(--garamond); font-style: italic; text-transform: none; font-size: 14px; letter-spacing: 0; color: rgba(42,23,16,0.5); margin-top: 1px; }
+    .opt .cursor { color: var(--red); margin: 0 8px; opacity: 0; }
+    .opt.active { color: var(--red); }
+    .opt.active .cursor { opacity: 1; animation: blink 1.1s steps(1) infinite; }
+    @keyframes blink { 50% { opacity: 0; } }
+
+    /* ---- music mute button ---- */
+    #musicToggle {
+        position: fixed; bottom: 16px; right: 18px; z-index: 20;
+        width: 44px; height: 44px; border-radius: 50%;
+        background: rgba(20,12,8,0.6); color: var(--gold);
+        border: 1px solid rgba(240,192,74,0.6);
+        font-size: 18px; line-height: 1; cursor: pointer;
+        display: flex; align-items: center; justify-content: center;
+        backdrop-filter: blur(4px); transition: transform 0.15s, background 0.2s;
+    }
+    #musicToggle:hover { transform: scale(1.07); background: rgba(20,12,8,0.85); }
+    #musicToggle.muted { color: rgba(251,245,230,0.45); border-color: rgba(251,245,230,0.25); text-decoration: line-through; }
+
+    @media (max-width: 480px) { .card { padding: 32px 22px 28px; } }
+</style>
 </head>
 <body>
 
-    <div class="paint-window">
-        <div class="title-bar">
-            <span>Tiffany_Jacob_Vegas_v21_FINAL_FIXES.bmp - Paint</span>          
-            <span>[ _ ] [ □ ] [ X ]</span>
-        </div>
-        <div class="menu-bar"><span>File</span> <span>Edit</span> <span>View</span> <span>Colors</span> <span>Help</span></div>
+<audio id="bgMusic" loop preload="none"><source src="audio/dreams.mp3" type="audio/mpeg"></audio>
 
-        <div class="main-area">
-            <div class="toolbox">
-                <div class="tool-btn active" id="pencil" onclick="setTool('pencil')">✏️</div>
-                <div class="tool-btn" id="brush" onclick="setTool('brush')">🖌️</div>
-                <div class="tool-btn" id="spray" onclick="setTool('spray')">🚿</div>
-                <div class="tool-btn" id="stamp" onclick="setTool('stamp')">🎲</div>
-                <div class="tool-btn" id="eraser" onclick="setTool('eraser')">🧽</div>
-                
-                <div class="size-picker">
-                    <div class="size-dot selected" style="width: 3px; height: 3px;" onclick="setSize(2, this)"></div>
-                    <div class="size-dot" style="width: 8px; height: 8px;" onclick="setSize(10, this)"></div>
-                    <div class="size-dot" style="width: 14px; height: 14px;" onclick="setSize(25, this)"></div>
-                    <div style="font-size: 8px; margin-top: 2px;">SIZE</div>
-                </div>
-                <div class="palette" id="palette"></div>
-                <button class="tool-btn" style="font-size: 10px; margin-top: 10px;" onclick="clearCanvas()">CLEAR</button>
-            </div>
+<div class="tv">
+    <div class="slideshow"><img class="slide" id="slideA" alt=""><img class="slide" id="slideB" alt=""></div>
+    <div class="wall-dim"></div>
 
-            <div id="canvas-container">
-                <canvas id="paintCanvas" width="850" height="1300"></canvas>
-                <div class="content-overlay">
-                    <div style="text-align: center;">
-                        <h1>Tiffany & Jacob</h1>
-                        <div class="badge">VEGAS BABY! - NOV 28, 2026</div>
-                        <div style="font-size: 60px; margin: 10px;">👩🏽‍❤️‍👱🏻‍♂️</div>
-                    </div>
-                    <div class="section">
-                        <h3>💒 The Big Day</h3>
-                        <p><strong>Where:</strong> Valley of Fire State Park, NV</p>
-                        <p><strong>When:</strong> November 28th, 2026</p>
-                        <p><strong>Stay:</strong> We'll be staying at The Flamingo Hotel.</p>
-                        <div style="display: flex; gap: 10px; margin-top: 10px; justify-content: center; flex-wrap: wrap;">
-                            <button onclick="window.open('https://www.caesars.com/flamingo-las-vegas', '_blank')" 
-                                style="background: #c0c0c0; border: 2px solid; border-color: #fff #808080 #808080 #fff; padding: 5px 10px; font-family: 'Arial'; font-size: 11px; cursor: pointer; font-weight: bold;">
-                                🏨 Flamingo Prices
-                            </button>
-                            <button onclick="window.open('https://www.google.com/travel/flights?q=Flights%20to%20LAS%20on%202026-11-26', '_blank')" 
-                                style="background: #c0c0c0; border: 2px solid; border-color: #fff #808080 #808080 #fff; padding: 5px 10px; font-family: 'Arial'; font-size: 11px; cursor: pointer; font-weight: bold;">
-                                ✈️ Check Flights
-                            </button>
-                        </div>
-                    </div>
-                    <div class="section">
-                        <h3>📖 Our Story</h3>
-                        <p>They met on Hinge in Utah, despite living in completely different locations. What followed was a comedy of errors involving long distance, constant driving, expiring visas, and terrible timing. For 18 months, they ping-ponged between Utah, Ohio, and Quebec, determined to make it work no matter how complicated things got. Between packed cars, rear-view-mirror waves, school deadlines, clashing dogs, and real life chaos, love kept winning. When Jacob proposed on a rainy April day, it marked the end of some of the chaos and the beginning of everything else. Some love stories are effortless. This one earned it.</p>
-                    </div>
-                    <div class="section" style="text-align: center; background: #ffff00;">
-                        <h2 style="margin: 0;">🎨 GUESTBOOK CHALLENGE:</h2>
-                        <p>Draw us something nice below, add your name, then hit <b>"SAVE ART"!</b></p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="bottom-bar">
-            <span style="font-size: 12px; margin-right: 10px;">Artist Name:</span>
-            <input type="text" id="artistName" class="win-input" placeholder="Type your name...">
-            <button class="save-btn" id="saveButton" onclick="saveToGuestbook()">SAVE ART TO GUESTBOOK</button>
-        </div>
+    <div class="chrome-top">
+        <span>&#9668;&nbsp; Main Menu</span>
+        <span class="gold">Forever Films &nbsp;&bull;&nbsp; Disc 1</span>
     </div>
 
-    <h2 style="color: white; font-family: 'Comic Sans MS';">🖼️ THE GUESTBOOK GALLERY 🖼️</h2>
-    <div id="guestbook-gallery">
-        <p style="color: white;">Loading masterpieces...</p>
+    <nav class="card">
+        <p class="eyebrow">Press Play to RSVP</p>
+        <h1 class="title">Tiffany <span class="amp">&amp;</span> Jacob</h1>
+        <p class="tagline">based on a true love story</p>
+        <div class="rule"></div>
+
+        <ul class="options" id="options">
+            <li class="opt active" data-href="rsvp.html">Play Movie<span class="cursor">&#9664;</span><span class="hint">press play to send your RSVP</span></li>
+            <li class="opt" data-href="details.html">Scene Selection<span class="cursor">&#9664;</span><span class="hint">where, when &amp; the day-of schedule</span></li>
+            <li class="opt" data-href="features.html">Special Features<span class="cursor">&#9664;</span><span class="hint">Vegas trip info, gifts &amp; the guestbook</span></li>
+            <li class="opt" data-href="setup.html">Set Up<span class="cursor">&#9664;</span><span class="hint">hotel, dress code &amp; getting there</span></li>
+        </ul>
+    </nav>
+
+    <div class="chrome-bot">
+        <span class="rating">Rated PG-13 for excessive PDA</span>
+        <span class="chapter-dots"><span class="on"></span><span></span><span></span><span></span></span>
+        <span>Runtime: Forever</span>
     </div>
 
-    <script>
-        const sheetURL = 'https://api.sheetbest.com/sheets/92bdd641-83f5-41b0-931c-75b267b99efd';
-        const canvas = document.getElementById('paintCanvas');
-        const ctx = canvas.getContext('2d');
-        let drawing = false;
-        let currentTool = 'pencil';
-        let currentColor = '#000000';
-        let currentSize = 2;
-        const stamps = ['🎲', '🌵', '💍', '🎰', '💖', '🏜️'];
+    <div class="grain"></div>
+</div>
 
-        window.onload = loadGallery;
+<button id="musicToggle" aria-label="Toggle music" title="Music">&#9834;</button>
 
-        const colors = ['#000000', '#808080', '#800000', '#808000', '#008000', '#008080', '#000080', '#800080', '#ffffff', '#c0c0c0', '#ff0000', '#ffff00', '#00ff00', '#00ffff', '#0000ff', '#ff00ff'];
-        const palette = document.getElementById('palette');
-        colors.forEach(c => {
-            const div = document.createElement('div');
-            div.className = 'color-swatch';
-            div.style.backgroundColor = c;
-            div.onclick = () => currentColor = c;
-            palette.appendChild(div);
-        });
+<script>
+    // ---- crossfade slideshow (landscape photos), sunflowers first & lingering ----
+    const PHOTOS = [
+        'images/IMG_6840.CR2.jpg',
+        'images/gallery/IMG_6656.CR2.jpg',
+        'images/gallery/IMG_6551.CR2.jpg',
+        'images/gallery/Snapchat-472617155.jpg',
+        'images/gallery/IMG_6648.CR2.jpg',
+        'images/gallery/IMG_6603.CR2.jpg',
+        'images/gallery/IMG_6657.CR2.jpg',
+        'images/gallery/IMG_4817.JPG',
+        'images/gallery/IMG_6704.CR2.jpg',
+        'images/gallery/IMG_6854.CR2.jpg',
+        'images/gallery/IMG_6869.CR2.jpg',
+        'images/gallery/IMG_6563.CR2.jpg',
+        'images/gallery/20240928_183919.jpg',
+        'images/gallery/IMG_6710.CR2.jpg',
+        'images/gallery/IMG_4129.jpg',
+        'images/gallery/IMG_6711.CR2.jpg',
+        'images/gallery/20250110_231935.jpg',
+        'images/gallery/IMG_6775.CR2.jpg',
+        'images/gallery/IMG_6592.CR2.jpg',
+        'images/gallery/IMG_6600.CR2.jpg',
+        'images/gallery/IMG_6602.CR2.jpg',
+        'images/gallery/20230722_201821.jpg',
+        'images/gallery/IMG_6825.CR2.jpg',
+        'images/gallery/20250731_083121.jpg',
+        'images/gallery/IMG_6789.CR2.jpg',
+        'images/gallery/20240928_183918.jpg',
+        'images/gallery/IMG_6582.CR2.jpg',
+        'images/gallery/IMG_6588.CR2.jpg',
+        'images/gallery/IMG_6822.CR2.jpg',
+        'images/gallery/20230408_111452.jpg',
+        'images/gallery/IMG_6839.CR2.jpg',
+        'images/gallery/IMG_6579.CR2.jpg',
+        'images/gallery/IMG_6580.CR2.jpg',
+        'images/gallery/IMG_6633.CR2.jpg',
+        'images/gallery/20230722_201701.jpg',
+        'images/gallery/IMG_6841.CR2.jpg',
+        'images/gallery/IMG_6852.CR2.jpg',
+        'images/gallery/IMG_6649.CR2.jpg',
+        'images/gallery/IMG_6565.CR2.jpg'
+    ];
+    let idx = 0;
+    let front = document.getElementById('slideA');
+    let back  = document.getElementById('slideB');
+    front.src = PHOTOS[0];
+    front.classList.add('show');
+    function advance() {
+        const n = (idx + 1) % PHOTOS.length;
+        back.onload = () => {
+            back.classList.add('show');
+            front.classList.remove('show');
+            const t = front; front = back; back = t;
+            idx = n;
+            schedule();
+        };
+        back.src = PHOTOS[n];
+    }
+    function schedule() { setTimeout(advance, idx === 0 ? 9000 : 3200); }
+    schedule();
 
-        function setSize(s, el) {
-            currentSize = s;
-            document.querySelectorAll('.size-dot').forEach(dot => dot.classList.remove('selected'));
-            el.classList.add('selected');
-        }
+    // ---- menu selector + navigation ----
+    const opts = document.querySelectorAll('.opt');
+    const dots = document.querySelectorAll('.chapter-dots span');
+    function activate(i) {
+        opts.forEach((o, j) => o.classList.toggle('active', j === i));
+        dots.forEach((d, j) => d.classList.toggle('on', j === i));
+    }
+    opts.forEach((opt, i) => {
+        opt.addEventListener('mouseenter', () => activate(i));
+        opt.addEventListener('click', () => { window.location.href = opt.dataset.href; });
+    });
 
-        function setTool(t) {
-            currentTool = t;
-            document.querySelectorAll('.tool-btn').forEach(b => b.classList.remove('active'));
-            document.getElementById(t).classList.add('active');
-        }
+    // ---- background music + mute ----
+    const audio = document.getElementById('bgMusic');
+    const btn = document.getElementById('musicToggle');
+    const VOL = 0.12;
+    let wantOn = true;
+    audio.volume = VOL;
+    function updateBtn() { btn.classList.toggle('muted', audio.paused); }
+    function tryStart() { if (!wantOn || !audio.paused) return; audio.volume = VOL; const p = audio.play(); if (p) p.then(updateBtn).catch(() => {}); }
+    tryStart();
+    ['pointerdown','keydown','touchstart','scroll'].forEach(ev => window.addEventListener(ev, tryStart, { passive: true }));
+    btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (audio.paused) { wantOn = true; audio.play().catch(() => {}); } else { wantOn = false; audio.pause(); }
+        setTimeout(updateBtn, 30);
+    });
+    updateBtn();
+</script>
 
-        function startDraw(e) {
-            const rect = canvas.getBoundingClientRect();
-            const scaleX = canvas.width / rect.width;
-            const scaleY = canvas.height / rect.height;
-            const x = (e.clientX - rect.left) * scaleX;
-            const y = (e.clientY - rect.top) * scaleY;
-
-            if (currentTool === 'stamp') {
-                ctx.font = '40px serif';
-                ctx.fillText(stamps[Math.floor(Math.random() * stamps.length)], x - 20, y + 15);
-                return;
-            }
-            drawing = true;
-            ctx.beginPath();
-            ctx.moveTo(x, y);
-        }
-
-        function draw(e) {
-            if (!drawing || currentTool === 'stamp') return;
-            const rect = canvas.getBoundingClientRect();
-            const scaleX = canvas.width / rect.width;
-            const scaleY = canvas.height / rect.height;
-            const x = (e.clientX - rect.left) * scaleX;
-            const y = (e.clientY - rect.top) * scaleY;
-
-            ctx.lineCap = 'round';
-            ctx.lineWidth = (currentTool === 'brush') ? currentSize * 4 : (currentTool === 'eraser') ? currentSize * 6 : currentSize;
-            ctx.strokeStyle = (currentTool === 'eraser') ? '#ffffff' : currentColor;
-
-            if (currentTool === 'spray') {
-                ctx.fillStyle = currentColor;
-                const spraySize = currentSize * 5;
-                for (let i = 0; i < 20; i++) ctx.fillRect(x + Math.random() * spraySize - (spraySize/2), y + Math.random() * spraySize - (spraySize/2), 1, 1);
-                return;
-            }
-            ctx.lineTo(x, y);
-            ctx.stroke();
-        }
-
-        async function loadGallery() {
-            try {
-                const response = await fetch(sheetURL);
-                const data = await response.json();
-                const gallery = document.getElementById('guestbook-gallery');
-                gallery.innerHTML = ''; 
-
-                data.reverse().forEach(row => {
-                    if (row.Drawing && row.Drawing.includes('http')) {
-                        const container = document.createElement('div');
-                        container.className = 'art-container';
-                        container.innerHTML = `<img src="${row.Drawing}" class="guest-art"><div class="artist-label">By: ${row['Guest Name']}</div>`;
-                        gallery.appendChild(container);
-                    }
-                });
-            } catch (e) { console.error("Gallery failed to load"); }
-        }
-
-        async function saveToGuestbook() {
-            const name = document.getElementById('artistName').value;
-            if (!name) { alert("Please enter your name!"); return; }
-
-            const btn = document.getElementById('saveButton');
-            btn.disabled = true;
-            btn.innerText = "SAVING...";
-
-            const blob = await new Promise(resolve => canvas.toBlob(resolve, 'image/png'));
-            
-            try {
-                const formData = new FormData();
-                formData.append('UPLOADCARE_PUB_KEY', '98a39db27d7709b8c888');
-                formData.append('UPLOADCARE_STORE', '1');
-                formData.append('file', blob, 'image.png'); // ADDED FILENAME HERE TO FIX 400 ERROR
-
-                const upRes = await fetch('https://upload.uploadcare.com/base/', { method: 'POST', body: formData });
-                const upData = await upRes.json();
-                const imageUrl = `https://ucarecdn.com/${upData.file}/`;
-
-                await fetch(sheetURL, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ "Guest Name": name, "Drawing": imageUrl })
-                });
-
-                alert("Success! Your art is now on the guestbook.");
-                location.reload(); 
-            } catch (error) {
-                alert("Error saving art.");
-                btn.disabled = false;
-                btn.innerText = "SAVE ART TO GUESTBOOK";
-            }
-        }
-
-        function clearCanvas() { ctx.clearRect(0, 0, canvas.width, canvas.height); }
-        
-        // 4. ADDED TOUCH SUPPORT ENGINE
-        canvas.addEventListener('mousedown', startDraw);
-        canvas.addEventListener('mousemove', draw);
-        window.addEventListener('mouseup', () => { drawing = false; ctx.beginPath(); });
-
-        canvas.addEventListener('touchstart', (e) => { 
-            const touch = e.touches[0];
-            startDraw(touch);
-            e.preventDefault();
-        }, {passive: false});
-
-        canvas.addEventListener('touchmove', (e) => {
-            const touch = e.touches[0];
-            draw(touch);
-            e.preventDefault();
-        }, {passive: false});
-
-        window.addEventListener('touchend', () => { drawing = false; ctx.beginPath(); });
-    </script>
 </body>
 </html>
