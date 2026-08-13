@@ -55,29 +55,13 @@
     .tl-time { font-family: var(--coterie); font-size: clamp(18px, 3.6vw, 22px); color: var(--wine); line-height: 1.05; }
     .tl-title { font-family: var(--garamond); font-style: italic; font-size: clamp(14px, 2.5vw, 17px); color: var(--ink); }
     .tl-note { font-family: var(--sans); font-size: 14px; letter-spacing: 0.02em; color: #7a5a44; margin-top: 3px; }
-
-    /* ---- music mute button ---- */
-    #musicToggle {
-        position: fixed; bottom: 16px; right: 18px; z-index: 20;
-        width: 44px; height: 44px; border-radius: 50%;
-        background: rgba(20,12,8,0.6); color: var(--gold);
-        border: 1px solid rgba(240,192,74,0.6);
-        font-size: 18px; line-height: 1; cursor: pointer;
-        display: flex; align-items: center; justify-content: center;
-        backdrop-filter: blur(4px); transition: transform 0.15s, background 0.2s;
-    }
-    #musicToggle:hover { transform: scale(1.07); background: rgba(20,12,8,0.85); }
-    #musicToggle.muted { color: rgba(251,245,230,0.45); border-color: rgba(251,245,230,0.25); text-decoration: line-through; }
 </style>
 </head>
 <body>
 
-<audio id="bgMusic" loop preload="none"><source src="audio/dreams.mp3" type="audio/mpeg"></audio>
-<button id="musicToggle" aria-label="Toggle music" title="Music">&#9834;</button>
-
 <div class="polaroids" id="polaroids"></div>
 <div class="page-dim"></div>
-<a class="back" href="index.html">&#9668; Main Menu</a>
+<a class="back" href="/">&#9668; Main Menu</a>
 
 <div class="wrap">
 
@@ -123,7 +107,8 @@
 <script>
     const GP = [
         'images/gallery/20230506_114011.jpg','images/gallery/IMG_5092.jpeg','images/gallery/cedar_city.jpeg',
-        'images/gallery/hiking_photo_utah.jpeg','images/gallery/Pre_date_photo.jpeg','images/gallery/wedding_day_photo.jpeg'
+        'images/gallery/hiking_photo_utah.jpeg','images/gallery/Pre_date_photo.jpeg','images/gallery/wedding_day_photo.jpeg',
+        'images/gallery/elop_IMG_6656.CR2.jpg','images/gallery/elop_IMG_6657.CR2.jpg','images/gallery/enga_IMG_6551.CR2.jpg'
     ];
     const SPOTS = [
         {x:1,y:5,r:-8},{x:71,y:3,r:7},{x:82,y:38,r:-6},{x:-3,y:42,r:6},{x:-1,y:74,r:-5},
@@ -141,26 +126,6 @@
         p.appendChild(im);
         wall.appendChild(p);
     });
-
-    // ---- background music + mute (persists across pages) ----
-    (function () {
-        const audio = document.getElementById('bgMusic');
-        const btn = document.getElementById('musicToggle');
-        const VOL = 0.12;
-        let wantOn = localStorage.getItem('musicOff') !== '1';
-        audio.volume = VOL;
-        function updateBtn() { btn.classList.toggle('muted', audio.paused); }
-        function tryStart() { if (!wantOn || !audio.paused) return; audio.volume = VOL; const p = audio.play(); if (p) p.then(updateBtn).catch(() => {}); }
-        tryStart();
-        ['pointerdown','keydown','touchstart','scroll'].forEach(ev => window.addEventListener(ev, tryStart, { passive: true }));
-        btn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            if (audio.paused) { wantOn = true; localStorage.removeItem('musicOff'); audio.play().catch(() => {}); }
-            else { wantOn = false; localStorage.setItem('musicOff', '1'); audio.pause(); }
-            setTimeout(updateBtn, 30);
-        });
-        updateBtn();
-    })();
 </script>
 
 </body>
