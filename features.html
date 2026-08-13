@@ -61,9 +61,25 @@
     .art-container { background: #d0d0d0; border: 2px solid; border-color: #ffffff #808080 #808080 #ffffff; padding: 5px; text-align: center; width: 220px; }
     .guest-art { width: 210px; height: 150px; object-fit: contain; background: white; border: 1px solid #808080; }
     .artist-label { font-size: 11px; font-weight: bold; margin-top: 5px; font-family: Arial, sans-serif; color: #000080; }
+
+    /* ---- music mute button ---- */
+    #musicToggle {
+        position: fixed; bottom: 16px; right: 18px; z-index: 20;
+        width: 44px; height: 44px; border-radius: 50%;
+        background: rgba(20,12,8,0.6); color: #cf9d3f;
+        border: 1px solid rgba(240,192,74,0.6);
+        font-size: 18px; line-height: 1; cursor: pointer;
+        display: flex; align-items: center; justify-content: center;
+        backdrop-filter: blur(4px); transition: transform 0.15s, background 0.2s;
+    }
+    #musicToggle:hover { transform: scale(1.07); background: rgba(20,12,8,0.85); }
+    #musicToggle.muted { color: rgba(251,245,230,0.45); border-color: rgba(251,245,230,0.25); text-decoration: line-through; }
 </style>
 </head>
 <body>
+
+<audio id="bgMusic" loop preload="none"><source src="audio/dreams.mp3" type="audio/mpeg"></audio>
+<button id="musicToggle" aria-label="Toggle music" title="Music">&#9834;</button>
 
 <div class="polaroids" id="polaroids"></div>
 <div class="page-dim"></div>
@@ -176,6 +192,26 @@
         } catch(e) { alert('Error saving. Please try again.'); btn.disabled=false; btn.innerText='SAVE ART TO GUESTBOOK'; }
     }
     function clearCanvas() { ctx.clearRect(0,0,canvas.width,canvas.height); }
+
+    // ---- background music + mute (persists across pages) ----
+    (function () {
+        const audio = document.getElementById('bgMusic');
+        const btn = document.getElementById('musicToggle');
+        const VOL = 0.12;
+        let wantOn = localStorage.getItem('musicOff') !== '1';
+        audio.volume = VOL;
+        function updateBtn() { btn.classList.toggle('muted', audio.paused); }
+        function tryStart() { if (!wantOn || !audio.paused) return; audio.volume = VOL; const p = audio.play(); if (p) p.then(updateBtn).catch(() => {}); }
+        tryStart();
+        ['pointerdown','keydown','touchstart','scroll'].forEach(ev => window.addEventListener(ev, tryStart, { passive: true }));
+        btn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            if (audio.paused) { wantOn = true; localStorage.removeItem('musicOff'); audio.play().catch(() => {}); }
+            else { wantOn = false; localStorage.setItem('musicOff', '1'); audio.pause(); }
+            setTimeout(updateBtn, 30);
+        });
+        updateBtn();
+    })();
 </script>
 
 </body>
