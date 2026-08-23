@@ -223,7 +223,12 @@
     function updateBtn() { btn.classList.toggle('muted', audio.paused); }
     function tryStart() { if (!wantOn || !audio.paused) return; audio.volume = VOL; const p = audio.play(); if (p) p.then(updateBtn).catch(() => {}); }
     tryStart();
-    ['pointerdown','keydown','touchstart','scroll'].forEach(ev => window.addEventListener(ev, tryStart, { passive: true }));
+    // Broad set of real "user activation" gesture types so autoplay unlocks
+    // reliably across browsers (Safari/iOS in particular is picky about which
+    // event types count; scroll/pointerdown alone aren't always enough).
+    ['pointerdown','mousedown','mouseup','click','keydown','touchstart','touchend','scroll']
+        .forEach(ev => window.addEventListener(ev, tryStart, { passive: true }));
+    document.addEventListener('visibilitychange', () => { if (!document.hidden) tryStart(); });
     btn.addEventListener('click', (e) => {
         e.stopPropagation();
         if (audio.paused) { wantOn = true; localStorage.removeItem('musicOff'); audio.play().catch(() => {}); }
