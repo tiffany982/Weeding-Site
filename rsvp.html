@@ -89,6 +89,18 @@
 
     .thankyou-big { font-family: var(--garamond); font-style: italic; color: #5a3a24; margin-top: 18px; font-size: 17px; line-height: 1.6; }
     .thankyou-back { display: inline-block; margin-top: 26px; }
+
+    /* ---- Haley's "no invite yet" block ---- */
+    .block-card { text-align: center; }
+    .block-card .stamp { font-size: 46px; margin-bottom: 10px; }
+    .block-card .block-title { font-family: var(--coterie); text-transform: uppercase; font-size: clamp(26px, 6vw, 36px); color: var(--red); line-height: 1.1; margin-bottom: 14px; }
+    .block-card .block-msg { font-family: var(--garamond); font-style: italic; font-size: 18px; line-height: 1.6; color: var(--ink); max-width: 460px; margin: 0 auto 22px; }
+
+    /* ---- Jess's dietary note ---- */
+    .note-card { background: #fffaf0; border: 1px solid rgba(217,49,11,0.3); border-radius: 6px; padding: 20px 22px; margin-bottom: 20px; }
+    .note-card .note-title { font-family: var(--sans); font-size: 10px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--red); margin-bottom: 10px; }
+    .note-card p { font-family: var(--garamond); font-size: 16px; line-height: 1.65; color: var(--ink); }
+    .note-card p + p { margin-top: 10px; }
 </style>
 </head>
 <body>
@@ -121,12 +133,26 @@
         </div>
     </div>
 
+    <!-- Haley's block screen -->
+    <div id="haleyBlock" class="hidden block-card">
+        <p class="stamp">🚫</p>
+        <p class="block-title">Nice Try</p>
+        <p class="block-msg">Bitch, you haven't received your invitation yet. What are you doing? Nice try.</p>
+        <a class="backlink" href="javascript:void(0)" onclick="resetSearch()">&#9668; Search a different name</a>
+    </div>
+
     <!-- STEP 2: RSVP for your party -->
     <form id="rsvpForm" class="hidden" action="https://formspree.io/f/xgawyrkd" method="POST">
         <input type="text" name="_gotcha" class="hp" tabindex="-1" autocomplete="off">
         <input type="hidden" name="_subject" value="New Wedding RSVP">
         <input type="hidden" name="_cc" value="jacob.briede@gmail.com">
         <input type="hidden" name="Party" id="partyField">
+
+        <div id="jessNote" class="hidden note-card">
+            <p class="note-title">A Note for Jess</p>
+            <p>Hey, I know you don't eat fish or beef, but we have a lot of options. For the salad, we're having Southern potato salad, and the starches are rosemary roasted potatoes. We're also doing orange honey glazed baby carrots for veggies, and obviously there's going to be a dessert.</p>
+            <p>For hors d'oeuvres, we're having ahi tuna tartare (I know you don't like tuna) and we also have white truffle mac and cheese and teriyaki chicken skewers. You will have options. Just pick between the two entrees, and then you can eat as many hors d'oeuvres and have the starches and stuff. Sorry, kind of forgot you don't eat fish and beef.</p>
+        </div>
 
         <div id="guestCards"></div>
 
@@ -284,13 +310,23 @@
     }
 
     function selectParty(party) {
+        document.getElementById('lookup').classList.add('hidden');
+
+        // Haley hasn't gotten her invitation yet, block her RSVP entirely
+        if (party.members.includes("Haley Gresham")) {
+            document.getElementById('haleyBlock').classList.remove('hidden');
+            return;
+        }
+
         document.getElementById('partyField').value = party.members.map(nick).join(", ");
         buildCards(party.members);
-        document.getElementById('lookup').classList.add('hidden');
+        document.getElementById('jessNote').classList.toggle('hidden', !party.members.includes("Jessie Abbott"));
         document.getElementById('rsvpForm').classList.remove('hidden');
     }
 
     function resetSearch() {
+        document.getElementById('haleyBlock').classList.add('hidden');
+        document.getElementById('lookup').classList.remove('hidden');
         document.getElementById('matchStep').classList.add('hidden');
         document.getElementById('searchStep').classList.remove('hidden');
     }
