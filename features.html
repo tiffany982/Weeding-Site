@@ -61,6 +61,26 @@
     .art-container { background: #d0d0d0; border: 2px solid; border-color: #ffffff #808080 #808080 #ffffff; padding: 5px; text-align: center; width: 220px; }
     .guest-art { width: 210px; height: 150px; object-fit: contain; background: white; border: 1px solid #808080; }
     .artist-label { font-size: 11px; font-weight: bold; margin-top: 5px; font-family: Arial, sans-serif; color: #000080; }
+    .guest-art { cursor: zoom-in; }
+
+    /* ---- click-to-enlarge lightbox ---- */
+    .lightbox {
+        position: fixed; inset: 0; z-index: 100;
+        background: rgba(10,8,6,0.88);
+        display: none; align-items: center; justify-content: center;
+        padding: 30px 18px; cursor: zoom-out;
+    }
+    .lightbox.open { display: flex; }
+    .lightbox-inner { max-width: 92vw; max-height: 88vh; text-align: center; }
+    .lightbox-inner img { max-width: 92vw; max-height: 76vh; object-fit: contain; background: #fff; border: 3px solid #fff; box-shadow: 0 20px 50px rgba(0,0,0,0.5); }
+    .lightbox-caption { font-family: Arial, sans-serif; font-size: 13px; font-weight: bold; color: #fff; margin-top: 12px; }
+    .lightbox-close {
+        position: fixed; top: 16px; right: 18px; z-index: 101;
+        width: 40px; height: 40px; border-radius: 50%;
+        background: rgba(255,255,255,0.15); color: #fff; border: 1px solid rgba(255,255,255,0.4);
+        font-size: 20px; line-height: 1; cursor: pointer; display: flex; align-items: center; justify-content: center;
+    }
+    .lightbox-close:hover { background: rgba(255,255,255,0.3); }
 </style>
 </head>
 <body>
@@ -129,6 +149,15 @@
     <div id="guestbook-gallery"><p style="font-family:Arial,sans-serif;font-size:13px;color:#666;padding:16px;">Loading masterpieces...</p></div>
 </div>
 
+<!-- click-to-enlarge lightbox -->
+<div class="lightbox" id="lightbox">
+    <button class="lightbox-close" id="lightboxClose" aria-label="Close">&#10005;</button>
+    <div class="lightbox-inner">
+        <img id="lightboxImg" src="" alt="Guest drawing, enlarged">
+        <p class="lightbox-caption" id="lightboxCaption"></p>
+    </div>
+</div>
+
 <script>
     const GP = [
         'images/gallery/20230610_174513.jpg','images/gallery/20231007_192111.jpg','images/gallery/montana_photo.jpeg',
@@ -160,7 +189,15 @@
         try {
             const data = await (await fetch(sheetURL)).json();
             const g = document.getElementById('guestbook-gallery'); g.innerHTML='';
-            data.reverse().forEach(row => { if (row.Drawing && row.Drawing.includes('http')) { const c=document.createElement('div'); c.className='art-container'; c.innerHTML=`<img src="${row.Drawing}" class="guest-art" loading="lazy"><div class="artist-label">By: ${row['Guest Name']}</div>`; g.appendChild(c); } });
+            data.reverse().forEach(row => {
+                if (row.Drawing && row.Drawing.includes('http')) {
+                    const c = document.createElement('div');
+                    c.className = 'art-container';
+                    c.innerHTML = `<img src="${row.Drawing}" class="guest-art" loading="lazy"><div class="artist-label">By: ${row['Guest Name']}</div>`;
+                    c.querySelector('.guest-art').addEventListener('click', () => openLightbox(row.Drawing, row['Guest Name']));
+                    g.appendChild(c);
+                }
+            });
             if (!g.children.length) g.innerHTML='<p style="font-family:Arial,sans-serif;font-size:13px;color:#666;padding:20px;">No art yet. Be the first!</p>';
         } catch(e) { console.error('Gallery failed', e); }
     }
@@ -177,6 +214,19 @@
         } catch(e) { alert('Error saving. Please try again.'); btn.disabled=false; btn.innerText='SAVE ART TO GUESTBOOK'; }
     }
     function clearCanvas() { ctx.clearRect(0,0,canvas.width,canvas.height); }
+
+    // ---- click-to-enlarge lightbox ----
+    const lightbox = document.getElementById('lightbox');
+    function openLightbox(src, name) {
+        document.getElementById('lightboxImg').src = src;
+        document.getElementById('lightboxCaption').textContent = 'By: ' + (name || 'Anonymous');
+        lightbox.classList.add('open');
+    }
+    function closeLightbox() { lightbox.classList.remove('open'); }
+    lightbox.addEventListener('click', closeLightbox);
+    document.getElementById('lightboxClose').addEventListener('click', (e) => { e.stopPropagation(); closeLightbox(); });
+    document.querySelector('.lightbox-inner').addEventListener('click', (e) => e.stopPropagation());
+    window.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeLightbox(); });
 </script>
 
 </body>
