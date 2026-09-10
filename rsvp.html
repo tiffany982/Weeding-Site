@@ -138,6 +138,16 @@
         <p class="stamp">🚫</p>
         <p class="block-title">Nice Try</p>
         <p class="block-msg">Bitch, you haven't received your invitation yet. What are you doing? Nice try.</p>
+
+        <button type="button" class="btn" id="haleyClaimBtn" onclick="haleyClaim()">Click here if you do have your invitation</button>
+
+        <div id="haleyPassword" class="hidden" style="margin-top:22px;text-align:left;max-width:340px;margin-left:auto;margin-right:auto;">
+            <p style="font-family:var(--sans);font-size:10px;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:var(--red);text-align:center;margin-bottom:10px;">Message Tiffany to get the password to make sure you're not lying</p>
+            <input type="text" id="haleyPwInput" placeholder="Enter the password" onkeydown="if(event.key==='Enter'){event.preventDefault();haleyCheckPassword();}">
+            <button type="button" class="btn submit" style="margin-top:10px;" onclick="haleyCheckPassword()">Submit</button>
+            <p class="msg" id="haleyPwMsg"></p>
+        </div>
+
         <a class="backlink" href="javascript:void(0)" onclick="resetSearch()">&#9668; Search a different name</a>
     </div>
 
@@ -309,23 +319,53 @@
         document.getElementById('matchStep').classList.remove('hidden');
     }
 
+    let haleyParty = null;   // holds her party while the block screen is up
+
     function selectParty(party) {
         document.getElementById('lookup').classList.add('hidden');
 
         // Haley hasn't gotten her invitation yet, block her RSVP entirely
         if (party.members.includes("Haley Gresham")) {
+            haleyParty = party;
             document.getElementById('haleyBlock').classList.remove('hidden');
             return;
         }
 
+        enterRsvpForm(party);
+    }
+
+    function enterRsvpForm(party) {
         document.getElementById('partyField').value = party.members.map(nick).join(", ");
         buildCards(party.members);
         document.getElementById('jessNote').classList.toggle('hidden', !party.members.includes("Jessie Abbott"));
         document.getElementById('rsvpForm').classList.remove('hidden');
     }
 
+    // ---- Haley's "I swear I have it" escalation ----
+    function haleyClaim() {
+        alert("Bitch, don't try to lie.");
+        document.getElementById('haleyClaimBtn').classList.add('hidden');
+        document.getElementById('haleyPassword').classList.remove('hidden');
+        document.getElementById('haleyPwInput').focus();
+    }
+
+    function haleyCheckPassword() {
+        const input = document.getElementById('haleyPwInput');
+        const msg = document.getElementById('haleyPwMsg');
+        if (input.value.trim().toLowerCase() === 'i love you') {
+            document.getElementById('haleyBlock').classList.add('hidden');
+            enterRsvpForm(haleyParty);
+        } else {
+            msg.textContent = "Nope. That's not it. Go ask Tiffany again.";
+        }
+    }
+
     function resetSearch() {
         document.getElementById('haleyBlock').classList.add('hidden');
+        document.getElementById('haleyClaimBtn').classList.remove('hidden');
+        document.getElementById('haleyPassword').classList.add('hidden');
+        document.getElementById('haleyPwInput').value = '';
+        document.getElementById('haleyPwMsg').textContent = '';
         document.getElementById('lookup').classList.remove('hidden');
         document.getElementById('matchStep').classList.add('hidden');
         document.getElementById('searchStep').classList.remove('hidden');
