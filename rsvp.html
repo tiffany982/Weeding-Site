@@ -90,6 +90,25 @@
     .thankyou-big { font-family: var(--garamond); font-style: italic; color: #5a3a24; margin-top: 18px; font-size: 17px; line-height: 1.6; }
     .thankyou-back { display: inline-block; margin-top: 26px; }
 
+    /* ---- custom popup (replaces the browser's native alert) ---- */
+    .popup-overlay {
+        position: fixed; inset: 0; z-index: 200;
+        background: rgba(20,12,8,0.72);
+        display: none; align-items: center; justify-content: center;
+        padding: 20px;
+    }
+    .popup-overlay.open { display: flex; }
+    .popup-box {
+        background: var(--cream-2); border: 1px solid rgba(217,49,11,0.35); border-radius: 6px;
+        box-shadow: 0 24px 60px rgba(0,0,0,0.35);
+        max-width: 360px; width: 100%; padding: 30px 26px; text-align: center;
+        animation: popIn 0.18s ease-out;
+    }
+    @keyframes popIn { from { transform: scale(0.92); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+    .popup-box .stamp { font-size: 38px; margin-bottom: 8px; }
+    .popup-box p { font-family: var(--garamond); font-style: italic; font-size: 19px; line-height: 1.5; color: var(--ink); margin-bottom: 22px; }
+    .popup-box .btn { width: 100%; }
+
     /* ---- Haley's "no invite yet" block ---- */
     .block-card { text-align: center; }
     .block-card .stamp { font-size: 46px; margin-bottom: 10px; }
@@ -229,6 +248,15 @@
     <a class="backlink" id="menuBack" href="/">&#9668; Back to Main Menu</a>
 </div>
 
+<!-- custom popup, matches the site instead of the browser's plain alert box -->
+<div class="popup-overlay" id="popupOverlay">
+    <div class="popup-box">
+        <p class="stamp">🙄</p>
+        <p id="popupMsg"></p>
+        <button type="button" class="btn" id="popupOkBtn">OK</button>
+    </div>
+</div>
+
 <script>
     /* =======================================================================
        GUEST LIST  —  REPLACE the placeholder parties below with the real ones.
@@ -342,11 +370,26 @@
     }
 
     // ---- Haley's "I swear I have it" escalation ----
+    // ---- custom popup (replaces the browser's native alert) ----
+    function showPopup(message, onClose) {
+        document.getElementById('popupMsg').textContent = message;
+        const overlay = document.getElementById('popupOverlay');
+        overlay.classList.add('open');
+        const okBtn = document.getElementById('popupOkBtn');
+        function close() {
+            overlay.classList.remove('open');
+            okBtn.removeEventListener('click', close);
+            if (onClose) onClose();
+        }
+        okBtn.addEventListener('click', close);
+    }
+
     function haleyClaim() {
-        alert("Bitch, don't try to lie.");
-        document.getElementById('haleyClaimBtn').classList.add('hidden');
-        document.getElementById('haleyPassword').classList.remove('hidden');
-        document.getElementById('haleyPwInput').focus();
+        showPopup("Bitch, don't try to lie.", () => {
+            document.getElementById('haleyClaimBtn').classList.add('hidden');
+            document.getElementById('haleyPassword').classList.remove('hidden');
+            document.getElementById('haleyPwInput').focus();
+        });
     }
 
     function haleyCheckPassword() {
