@@ -251,7 +251,7 @@
 <!-- custom popup, matches the site instead of the browser's plain alert box -->
 <div class="popup-overlay" id="popupOverlay">
     <div class="popup-box">
-        <p class="stamp">🙄</p>
+        <p class="stamp" id="popupStamp">🙄</p>
         <p id="popupMsg"></p>
         <button type="button" class="btn" id="popupOkBtn">OK</button>
     </div>
@@ -371,7 +371,8 @@
 
     // ---- Haley's "I swear I have it" escalation ----
     // ---- custom popup (replaces the browser's native alert) ----
-    function showPopup(message, onClose) {
+    function showPopup(message, onClose, emoji) {
+        document.getElementById('popupStamp').textContent = emoji || '🙄';
         document.getElementById('popupMsg').textContent = message;
         const overlay = document.getElementById('popupOverlay');
         overlay.classList.add('open');
@@ -429,7 +430,7 @@
                 `<p class="guest-name">${who}</p>` +
                 `<div class="attend">` +
                     `<label><input type="radio" name="${who} attending" value="Joyfully accepts" required onchange="toggleMeals(this, true)"> Joyfully accepts</label>` +
-                    `<label><input type="radio" name="${who} attending" value="Regretfully declines" onchange="toggleMeals(this, false)"> Regretfully declines</label>` +
+                    `<label><input type="radio" name="${who} attending" value="Regretfully declines" data-realname="${name}" onchange="toggleMeals(this, false)"> Regretfully declines</label>` +
                 `</div>` +
                 `<div class="meals hidden">` +
                     `<p class="prompt">Choose your meal</p>` +
@@ -439,10 +440,21 @@
         });
     }
 
+    // guests who get roasted with a popup if they pick "Regretfully declines"
+    const DECLINE_ROAST = [
+        "Bryan Maue", "Stephen Cifuentes", "Matt Krabacher", "Austin Porter", "Sunny Porter",
+        "Catherine Oslin", "Nick Oslin", "Alex Hoyle", "Carissa Hoskins", "Bryan Gardiner",
+        "Jacob Hartman", "Jason Schuler",
+        "Shawna Annan", "Meshach Daniel", "Eliana Annan", "Antoine", "Andrea Annan", "Betty Annan"
+    ];
+
     function toggleMeals(radio, attending) {
         const meals = radio.closest('.guest-card').querySelector('.meals');
         meals.classList.toggle('hidden', !attending);
         if (!attending) meals.querySelectorAll('input').forEach(b => b.checked = false);
+        if (!attending && DECLINE_ROAST.includes(radio.dataset.realname)) {
+            showPopup("Loser.", null, '😛');
+        }
     }
 
     // ---- polaroid background ----
