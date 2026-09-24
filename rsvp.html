@@ -238,10 +238,10 @@
     </form>
 
     <div id="thankyou" class="hidden" style="text-align:center;">
-        <p class="eyebrow">That's a wrap</p>
-        <h2 class="title" style="font-size:clamp(42px,11vw,70px);">Thank You</h2>
-        <p class="tagline">your seat is saved</p>
-        <p class="thankyou-big">We can't wait to celebrate with you at Valley of Fire.<br>Now go on, the open bar isn't going to drink itself. See you at the premiere.</p>
+        <p class="eyebrow" id="thankyouEyebrow">That's a wrap</p>
+        <h2 class="title" id="thankyouTitle" style="font-size:clamp(42px,11vw,70px);">Thank You</h2>
+        <p class="tagline" id="thankyouTag">your seat is saved</p>
+        <p class="thankyou-big" id="thankyouMsg">We can't wait to celebrate with you at Valley of Fire.<br>Now go on, the open bar isn't going to drink itself. See you at the premiere.</p>
         <a class="btn thankyou-back" href="/">&#9668; Back to Menu</a>
     </div>
 
@@ -486,6 +486,22 @@
         try {
             const res = await fetch(form.action, { method: 'POST', body: new FormData(form), headers: { 'Accept': 'application/json' } });
             if (!res.ok) throw new Error('bad response');
+
+            const attendRadios = Array.from(form.querySelectorAll('input[type=radio][name$=" attending"]:checked'));
+            const anyAccepted = attendRadios.some(r => r.value === 'Joyfully accepts');
+
+            if (anyAccepted) {
+                document.getElementById('thankyouEyebrow').textContent = "That's a wrap";
+                document.getElementById('thankyouTitle').textContent = 'Thank You';
+                document.getElementById('thankyouTag').textContent = 'your seat is saved';
+                document.getElementById('thankyouMsg').innerHTML = "We can't wait to celebrate with you at Valley of Fire.<br>Now go on, the open bar isn't going to drink itself. See you at the premiere.";
+            } else {
+                document.getElementById('thankyouEyebrow').textContent = 'Noted';
+                document.getElementById('thankyouTitle').textContent = 'So Sorry';
+                document.getElementById('thankyouTag').textContent = "we'll miss you";
+                document.getElementById('thankyouMsg').textContent = "Thanks for letting us know. So sad you won't be able to celebrate with us.";
+            }
+
             document.querySelector('.head').classList.add('hidden');
             document.getElementById('lookup').classList.add('hidden');
             form.classList.add('hidden');
