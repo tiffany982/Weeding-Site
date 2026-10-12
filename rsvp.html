@@ -185,50 +185,31 @@
 
         <div id="guestCards"></div>
 
-        <div class="extra-box" id="extraBox">
+        <div class="extra-box">
             <div class="field">
                 <label class="lbl" for="diet">Dietary restrictions or allergies (whole party)</label>
-                <input type="text" id="diet" name="Dietary restrictions" placeholder="Anything we should know, or 'None'" required>
+                <input type="text" id="diet" name="Dietary restrictions" placeholder="Anything we should know">
             </div>
 
             <div class="field">
                 <label class="lbl" for="arrival">When do you plan to arrive in Vegas?</label>
-                <input type="text" id="arrival" name="Arriving in Vegas" placeholder="e.g. Nov 25 (your best guess is fine)" required>
+                <input type="text" id="arrival" name="Arriving in Vegas" placeholder="If you know (e.g. Nov 25)">
             </div>
 
             <div class="field">
                 <label class="lbl" for="cell">Best cell number to reach you in Vegas</label>
-                <input type="tel" id="cell" name="Cell number" placeholder="For day-of coordination" required pattern="(?=(?:\D*\d){10})[0-9+\(\)\-.\s]+" title="Please enter a phone number with at least 10 digits">
+                <input type="tel" id="cell" name="Cell number" placeholder="For day-of coordination">
             </div>
 
             <div class="field">
                 <label class="lbl" for="hotel">Where are you staying in Vegas?</label>
-                <input type="text" id="hotel" name="Staying in Vegas" placeholder="e.g. The Flamingo, or 'Casino floor' if not sure yet" list="vegasHotels" required>
-                <datalist id="vegasHotels">
-                    <option value="The Flamingo">
-                    <option value="Bellagio">
-                    <option value="Caesars Palace">
-                    <option value="The Venetian">
-                    <option value="MGM Grand">
-                    <option value="Aria">
-                    <option value="Paris Las Vegas">
-                    <option value="Planet Hollywood">
-                    <option value="The Mirage">
-                    <option value="Wynn Las Vegas">
-                    <option value="Encore">
-                    <option value="Luxor">
-                    <option value="Excalibur">
-                    <option value="New York-New York">
-                    <option value="The Cosmopolitan">
-                    <option value="Park MGM">
-                    <option value="Casino floor">
-                </datalist>
+                <input type="text" id="hotel" name="Staying in Vegas" placeholder="e.g. The Flamingo, or 'Casino floor' if not sure yet">
             </div>
 
             <div class="field">
                 <label class="lbl">Getting to Valley of Fire</label>
                 <div class="attend">
-                    <label><input type="radio" name="Transportation" value="Taking the shuttle" required> Taking the shuttle</label>
+                    <label><input type="radio" name="Transportation" value="Taking the shuttle"> Taking the shuttle</label>
                     <label><input type="radio" name="Transportation" value="Driving myself"><span>Driving myself<br><span style="font-size:11px;opacity:0.7;font-weight:400;">(50 min from the Strip, $15 park entrance fee)</span></span></label>
                 </div>
             </div>
@@ -438,16 +419,6 @@
                 `</div>`;
             wrap.appendChild(card);
         });
-        syncRequired();
-    }
-
-    // the logistics questions only matter if someone is coming, so a fully declined party skips them
-    function syncRequired() {
-        const declines = Array.from(document.querySelectorAll('#guestCards input[value="Regretfully declines"]'));
-        const allDeclined = declines.length > 0 && declines.every(r => r.checked);
-        const box = document.getElementById('extraBox');
-        box.classList.toggle('hidden', allDeclined);
-        box.querySelectorAll('input').forEach(i => { i.required = !allDeclined; });
     }
 
     // guests who get roasted with a popup if they pick "Regretfully declines"
@@ -461,8 +432,7 @@
     function toggleMeals(radio, attending) {
         const meals = radio.closest('.guest-card').querySelector('.meals');
         meals.classList.toggle('hidden', !attending);
-        meals.querySelectorAll('input').forEach(b => { b.required = attending; if (!attending) b.checked = false; });
-        syncRequired();
+        if (!attending) meals.querySelectorAll('input').forEach(b => b.checked = false);
         if (!attending && DECLINE_ROAST.includes(radio.dataset.realname)) {
             showPopup("Loser.", null, '😛');
         }
