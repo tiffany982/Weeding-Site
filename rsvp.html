@@ -26,6 +26,7 @@
     .card-corner { position: absolute; display: flex; flex-direction: column; align-items: center; line-height: 0.82; color: var(--red); }
     .card-corner .letter { font-family: var(--script); font-size: 60px; }
     .card-corner .pip { font-size: 30px; margin-top: 2px; }
+    a.card-corner { text-decoration: none; cursor: default; }
     .card-corner.tl { top: 26px; left: 30px; }
     .card-corner.br { bottom: 26px; right: 30px; transform: rotate(180deg); }
     .c-eyebrow { font-family: var(--sans); font-size: 9px; font-weight: 700; letter-spacing: 0.3em; text-transform: uppercase; color: var(--red); margin-bottom: 6px; }
@@ -45,7 +46,7 @@
 <div class="wrap">
     <div class="playing-card">
         <span class="card-corner tl"><span class="letter">T</span><span class="pip">&#9829;</span></span>
-        <span class="card-corner br"><span class="letter">J</span><span class="pip">&#9829;</span></span>
+        <a class="card-corner br" href="/rsvp-open" aria-label="Jacob"><span class="letter">J</span><span class="pip">&#9829;</span></a>
         <p class="c-eyebrow">The Window Has Closed</p>
         <h1 class="c-title">RSVP Closed</h1>
         <p class="c-script">that's a wrap</p>
