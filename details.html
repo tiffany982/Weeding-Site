@@ -55,6 +55,13 @@
     .tl-time { font-family: var(--coterie); font-size: clamp(18px, 3.6vw, 22px); color: var(--wine); line-height: 1.05; }
     .tl-title { font-family: var(--garamond); font-style: italic; font-size: clamp(14px, 2.5vw, 17px); color: var(--ink); }
     .tl-note { font-family: var(--sans); font-size: 14px; letter-spacing: 0.02em; color: #7a5a44; margin-top: 3px; }
+
+    /* ---- special features notes ---- */
+    .notes { max-width: 500px; margin: 0 auto; text-align: left; }
+    .note-block { margin-bottom: 24px; } .note-block:last-child { margin-bottom: 0; }
+    .note-block h3 { font-family: var(--coterie); text-transform: uppercase; font-size: clamp(17px, 4vw, 22px); color: var(--red); letter-spacing: 0.03em; margin-bottom: 5px; }
+    .note-block p { font-family: var(--garamond); font-size: clamp(15px, 2.6vw, 18px); line-height: 1.7; color: var(--ink); }
+    .note-block a { color: var(--red); }
 </style>
 </head>
 <body>
@@ -99,6 +106,29 @@
             <div class="tl-item"><p class="tl-time">3:00 PM</p><p class="tl-title">Desserts</p></div>
             <div class="tl-item"><p class="tl-time">3:30 PM</p><p class="tl-title">Portraits &amp; guests board the buses</p></div>
             <div class="tl-item"><p class="tl-time">5:00 PM</p><p class="tl-title">Buses drop off on the strip</p></div>
+        </div>
+    </div>
+
+    <!-- Special features card -->
+    <div class="playing-card">
+        <span class="card-corner tl"><span class="letter">T</span><span class="pip">&#9829;</span></span>
+        <span class="card-corner br"><span class="letter">J</span><span class="pip">&#9829;</span></span>
+        <p class="c-eyebrow">Bonus Features</p>
+        <h2 class="c-title">Special Features</h2>
+        <p class="c-script">the good stuff</p>
+        <div class="notes">
+            <div class="note-block">
+                <h3>The Vegas Trip</h3>
+                <p>We'll be in Vegas from <strong>Tuesday, November 24</strong> right up to the wedding. There are no official events planned before the big day, but we'd love to explore the strip, hit the tables, and grab dinner with anyone who's already in town. Text Jacob and we'll figure out where to meet up.</p>
+            </div>
+            <div class="note-block">
+                <h3>Gifts</h3>
+                <p>Please, <strong>no gifts</strong>. We're already asking you to travel for us, and that's more than enough. Your presence is the present.</p>
+            </div>
+            <div class="note-block">
+                <h3>The Guestbook</h3>
+                <p>Head over to the <a href="/features">Special Features page</a> for a fully working <strong>MS Paint guestbook</strong>, straight off the original takejiff.com. Pick a tool, draw us something ridiculous, sign your name, and it'll show up in the gallery for everyone to see.</p>
+            </div>
         </div>
     </div>
 
